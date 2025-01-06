@@ -1,0 +1,12 @@
+{
+    "greeting" : "Welcome to Calculator!",
+    "num_prompt" : ["Whats the first number?", "What's the second number?"],
+    "invalid_num_message" : "Invalid number entered, must be a whole number. Try again:",
+    "operation_message" : "What operation would you like to perform?",
+    "operation_options" : "(1) Addition, (2) Subtraction, (3) Multiplication, (4) Division",
+    "invalid_operation_message" : "Invalid operation input, must choose either '1', '2', '3', or '4'. Try again:",
+    "division_by_zero" : "Cannot Divide by Zero!",
+    "result_message" : "The result is:",
+    "try_again_message" : "Would you like to use Calculator again? y/n",
+    "try_again_answer" : ["Restarting Calculator...", "Exiting Program..."]
+}
