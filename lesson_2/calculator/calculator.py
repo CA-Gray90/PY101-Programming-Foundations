@@ -28,7 +28,7 @@ while True:
     num_1 = input()
 
     while invalid_num(num_1):   # Validity Check
-        prompt('Invalid input entered, try again:')
+        prompt('Invalid input entered, must be a whole number. Try again:')
         num_1 = input()
 
     prompt("What's the second number?")
@@ -43,7 +43,8 @@ while True:
     operation = input()
 
     while operation not in ['1', '2', '3', '4']:
-        prompt('Invalid operation chosen, must choose 1, 2, 3 or 4. Try again:')
+        prompt('Invalid operation chosen,'
+               ' must choose 1, 2, 3 or 4. Try again:')
         operation = input()
 
     match operation:
@@ -60,6 +61,8 @@ while True:
 
     prompt('Would you like to try again? y/n')
     user_answer = input()
-    if not try_again(user_answer):
+    if try_again(user_answer):
+        prompt('Starting again...')
+    else:
         prompt('Exiting Program...')
         break
