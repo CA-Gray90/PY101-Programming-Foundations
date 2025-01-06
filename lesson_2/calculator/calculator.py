@@ -16,9 +16,8 @@ def try_again(answer):
             return True
         if answer == 'n':
             return False
-        else:
-            prompt("Invalid response, please enter either 'y' or 'n':")
-            answer = input()
+        prompt("Invalid response, please enter either 'y' or 'n':")
+        answer = input()
 
 # PROGRAM START
 prompt('Welcome to Calculator!')
@@ -42,7 +41,7 @@ while True:
     (1) Addition, (2) Subtraction, (3) Multiplication, (4) Division''')
     operation = input()
 
-    while operation not in ['1', '2', '3', '4']:
+    while operation not in ['1', '2', '3', '4']:    # Operation validity check
         prompt('Invalid operation chosen,'
                ' must choose 1, 2, 3 or 4. Try again:')
         operation = input()
@@ -55,13 +54,13 @@ while True:
         case '3':
             result = int(num_1) * int(num_2)
         case '4':
-            if num_2 != '0':
+            if num_2 != '0':    # Check for division by Zero
                 result = int(num_1) / int(num_2)
             else:
                 print('Cannot Divide by Zero!')
                 result = None
 
-    if result != None:
+    if result is not None:
         prompt(f'The result is {result}')
 
     prompt('Would you like to try again? y/n')
