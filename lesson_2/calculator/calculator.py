@@ -55,9 +55,14 @@ while True:
         case '3':
             result = int(num_1) * int(num_2)
         case '4':
-            result = int(num_1) / int(num_2)
+            if num_2 != '0':
+                result = int(num_1) / int(num_2)
+            else:
+                print('Cannot Divide by Zero!')
+                result = None
 
-    prompt(f'The result is {result}')
+    if result != None:
+        prompt(f'The result is {result}')
 
     prompt('Would you like to try again? y/n')
     user_answer = input()
