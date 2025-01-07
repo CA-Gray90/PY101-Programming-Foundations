@@ -13,7 +13,7 @@ def prompt(message, index=None):
 
 def invalid_num(number_str):
     try:
-        int(number_str)
+        float(number_str)
     except ValueError:
         return True
     return False
@@ -29,7 +29,7 @@ def try_again(answer):
         answer = input()
 
 def language_select():
-    print("Please select a language: "
+    print("! Please select a language: "
            "'en' for English, 'au' for Australian")
     answer = input().casefold()
 
@@ -53,6 +53,8 @@ while True:
     while invalid_num(num_1):   # Validity Check
         prompt('invalid_num_message')
         num_1 = input()
+    
+    num_1 = float(num_1)
 
     prompt('num_prompt', 1)
     num_2 = input()
@@ -60,6 +62,8 @@ while True:
     while invalid_num(num_2):
         prompt('invalid_num_message')
         num_2 = input()
+
+    num_2 = float(num_2)
 
     prompt('operation_message')
     prompt('operation_options')
@@ -69,23 +73,30 @@ while True:
         prompt('invalid_operation_message')
         operation = input()
 
+    operation_dict = {
+        '1' : '+',
+        '2' : '-',
+        '3' : '*',
+        '4' : '/'
+    }
+
     match operation:
         case '1':
-            result = int(num_1) + int(num_2)
+            RESULT = num_1 + num_2
         case '2':
-            result = int(num_1) - int(num_2)
+            RESULT = num_1 - num_2
         case '3':
-            result = int(num_1) * int(num_2)
+            RESULT = num_1 * num_2
         case '4':
             if num_2 != '0':    # Check for division by Zero
-                result = int(num_1) / int(num_2)
+                RESULT = num_1 / num_2
             else:
                 prompt('division_by_zero')
-                result = None
+                RESULT = None
 
-    if result is not None:
+    if RESULT is not None:
         prompt('result_message')
-        print(f'{result}')
+        print(f'{num_1} {operation_dict[operation]} {num_2} = {RESULT}')
 
     prompt('try_again_message')
     user_answer = input()

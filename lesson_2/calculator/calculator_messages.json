@@ -2,7 +2,7 @@
 "en" : {
     "greeting" : "Welcome to Calculator!",
     "num_prompt" : ["What's the first number?", "What's the second number?"],
-    "invalid_num_message" : "Invalid number entered, must be a whole number. Try again:",
+    "invalid_num_message" : "Invalid number entered, must be a number. Try again:",
     "operation_message" : "What operation would you like to perform?",
     "operation_options" : "(1) Addition, (2) Subtraction, (3) Multiplication, (4) Division",
     "invalid_operation_message" : "Invalid operation input, must choose either '1', '2', '3', or '4'. Try again:",
@@ -15,7 +15,7 @@
 "au" : {
     "greeting": "G'day mate, welcome to Calculator!",
     "num_prompt": ["What's ya first number mate?", "What's ya second number?"],
-    "invalid_num_message": "It's gotta be whole number, ya drongo! Have another go:",
+    "invalid_num_message": "It's gotta be a number, ya drongo! Have another go:",
     "operation_message": "What mathematical operation do ya wanna have a crack at?",
     "operation_options": "(1) Add them, (2) Minus it, (3) Times them, (4) Divide them",
     "invalid_operation_message": "Ya gotta choose either '1', '2', '3', or '4'! Have another crack:",
