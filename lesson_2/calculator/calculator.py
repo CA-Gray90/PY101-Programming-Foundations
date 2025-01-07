@@ -1,3 +1,9 @@
+# IMPORTS
+import json
+
+with open('calculator_messages.json', 'r') as file:
+    messages = json.load(file)
+
 # FUNCTIONS
 def prompt(message):
     print(f'==> {message}')
@@ -16,34 +22,33 @@ def try_again(answer):
             return True
         if answer == 'n':
             return False
-        prompt("Invalid response, please enter either 'y' or 'n':")
+        prompt(messages['invalid_try_again'])
         answer = input()
 
 # PROGRAM START
-prompt('Welcome to Calculator!')
+prompt(messages['greeting'])
 
 while True:
-    prompt("What's the first number?")
+    prompt(messages['num_prompt'][0])
     num_1 = input()
 
     while invalid_num(num_1):   # Validity Check
-        prompt('Invalid input entered, must be a whole number. Try again:')
+        prompt(messages['invalid_num_message'])
         num_1 = input()
 
-    prompt("What's the second number?")
+    prompt(messages['num_prompt'][1])
     num_2 = input()
 
     while invalid_num(num_2):
-        prompt('Invalid input entered, try again:')
+        prompt(messages['invalid_num_message'])
         num_2 = input()
 
-    prompt('''What operation would you like to perform?
-    (1) Addition, (2) Subtraction, (3) Multiplication, (4) Division''')
+    prompt(messages['operation_message'])
+    prompt(messages['operation_options'])
     operation = input()
 
     while operation not in ['1', '2', '3', '4']:    # Operation validity check
-        prompt('Invalid operation chosen,'
-               ' must choose 1, 2, 3 or 4. Try again:')
+        prompt(messages['invalid_operation_message'])
         operation = input()
 
     match operation:
@@ -57,16 +62,16 @@ while True:
             if num_2 != '0':    # Check for division by Zero
                 result = int(num_1) / int(num_2)
             else:
-                print('Cannot Divide by Zero!')
+                print(messages['division_by_zero'])
                 result = None
 
     if result is not None:
-        prompt(f'The result is {result}')
+        prompt(f'{messages['result_message']} {result}')
 
-    prompt('Would you like to try again? y/n')
+    prompt(messages['try_again_message'])
     user_answer = input()
     if try_again(user_answer):
-        prompt('Starting again...')
+        prompt(messages['try_again_answer'][0])
     else:
-        prompt('Exiting Program...')
+        prompt(messages['try_again_answer'][1])
         break

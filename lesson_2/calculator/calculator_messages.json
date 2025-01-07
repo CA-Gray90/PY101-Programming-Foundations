@@ -8,5 +8,6 @@
     "division_by_zero" : "Cannot Divide by Zero!",
     "result_message" : "The result is:",
     "try_again_message" : "Would you like to use Calculator again? y/n",
-    "try_again_answer" : ["Restarting Calculator...", "Exiting Program..."]
+    "try_again_answer" : ["Restarting Calculator...", "Exiting Program..."],
+    "invalid_try_again" : "Invalid response, please enter either 'y' for yes, 'n' for no."
 }
