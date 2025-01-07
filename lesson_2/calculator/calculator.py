@@ -2,7 +2,7 @@
 import json
 
 with open('calculator_messages.json', 'r') as file:
-    MESSAGES = json.load(file)
+    messages = json.load(file)
 
 # FUNCTIONS
 def prompt(message):
@@ -25,8 +25,26 @@ def try_again(answer):
         prompt(MESSAGES['invalid_try_again'])
         answer = input()
 
+def language_select():
+    prompt("Please select a language: "
+           "'en' for English, 'au' for Australian")
+    answer = input().casefold()
+
+    while True:
+        if answer in ['en', 'english']:
+            return 'en'
+        if answer in ['au', 'australian']:
+            return 'au'
+        prompt("Invalid input, please enter either 'en' or 'au' ")
+        answer = input().casefold()
+
 # PROGRAM START
+LANG = language_select()
+
+MESSAGES = messages[LANG]
+
 prompt(MESSAGES['greeting'])
+
 
 while True:
     prompt(MESSAGES['num_prompt'][0])
