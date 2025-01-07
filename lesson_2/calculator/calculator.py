@@ -1,6 +1,8 @@
 # IMPORTS
 import json
 
+import math
+
 with open('calculator_messages.json', 'r') as file:
     MESSAGES = json.load(file)
 
@@ -16,7 +18,10 @@ def invalid_num(number_str):
         float(number_str)
     except ValueError:
         return True
-    return False
+    else:
+        if math.isnan(float(number_str)):
+            return True
+        return False
 
 def try_again(answer):
     answer = answer.casefold()
