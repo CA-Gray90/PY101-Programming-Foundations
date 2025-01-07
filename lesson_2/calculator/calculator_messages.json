@@ -1,6 +1,7 @@
-{
+{  
+"en" : {
     "greeting" : "Welcome to Calculator!",
-    "num_prompt" : ["Whats the first number?", "What's the second number?"],
+    "num_prompt" : ["What's the first number?", "What's the second number?"],
     "invalid_num_message" : "Invalid number entered, must be a whole number. Try again:",
     "operation_message" : "What operation would you like to perform?",
     "operation_options" : "(1) Addition, (2) Subtraction, (3) Multiplication, (4) Division",
@@ -10,4 +11,18 @@
     "try_again_message" : "Would you like to use Calculator again? y/n",
     "try_again_answer" : ["Restarting Calculator...", "Exiting Program..."],
     "invalid_try_again" : "Invalid response, please enter either 'y' for yes, 'n' for no."
+    },
+"au" : {
+    "greeting": "G'day mate, welcome to Calculator!",
+    "num_prompt": ["What's ya first number mate?", "What's ya second number?"],
+    "invalid_num_message": "It's gotta be whole number, ya drongo! Have another go:",
+    "operation_message": "What mathematical operation do ya wanna have a crack at?",
+    "operation_options": "(1) Add them, (2) Minus it, (3) Times them, (4) Divide them",
+    "invalid_operation_message": "Ya gotta choose either '1', '2', '3', or '4'! Have another crack:",
+    "division_by_zero": "Ya can't divide by Zero mate! Gotta coupla loose marbles rattlin in ya head.",
+    "result_message": "Here ya go mate, the result is:",
+    "try_again_message": "Have another crack at Calculator again? y/n",
+    "try_again_answer": ["On ya mate, let's go!!", "Cya later mate... I'm off to the servo."],
+    "invalid_try_again": "Bloody hell, it's 'y' for yes, 'n' for no! Can't sit around all arvo for ya, give it another go."
+    }
 }
