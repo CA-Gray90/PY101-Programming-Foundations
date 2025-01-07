@@ -88,7 +88,7 @@ while True:
         case '3':
             RESULT = num_1 * num_2
         case '4':
-            if num_2 != '0':    # Check for division by Zero
+            if num_2 != 0:    # Check for division by Zero
                 RESULT = num_1 / num_2
             else:
                 prompt('division_by_zero')
