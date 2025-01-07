@@ -41,9 +41,16 @@ def language_select():
         print("Invalid input, please enter either 'en' or 'au' ")
         answer = input().casefold()
 
-# PROGRAM START
 LANG = language_select()
 
+operation_dict = {
+    '1' : '+',
+    '2' : '-',
+    '3' : '*',
+    '4' : '/'
+}
+
+# PROGRAM START
 prompt('greeting')
 
 while True:
@@ -53,7 +60,7 @@ while True:
     while invalid_num(num_1):   # Validity Check
         prompt('invalid_num_message')
         num_1 = input()
-    
+
     num_1 = float(num_1)
 
     prompt('num_prompt', 1)
@@ -72,13 +79,6 @@ while True:
     while operation not in ['1', '2', '3', '4']:    # Operation validity check
         prompt('invalid_operation_message')
         operation = input()
-
-    operation_dict = {
-        '1' : '+',
-        '2' : '-',
-        '3' : '*',
-        '4' : '/'
-    }
 
     match operation:
         case '1':
