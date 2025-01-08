@@ -3,6 +3,10 @@ import json
 
 import math
 
+import os
+
+import time
+
 with open('calculator_messages.json', 'r') as file:
     MESSAGES = json.load(file)
 
@@ -40,12 +44,18 @@ def language_select():
 
     while True:
         if answer in ['en', 'english']:
+            print('English selected...')
+            time.sleep(1)
             return 'en'
         if answer in ['au', 'australian']:
+            print('Aussie lingo selected...')
+            time.sleep(1)
             return 'au'
         print("Invalid input, please enter either 'en' or 'au' ")
         answer = input().casefold()
 
+# PROGRAM START
+os.system('clear')
 LANG = language_select()
 
 operation_dict = {
@@ -54,8 +64,8 @@ operation_dict = {
     '3' : '*',
     '4' : '/'
 }
+os.system('clear')
 
-# PROGRAM START
 prompt('greeting')
 
 while True:
@@ -107,6 +117,8 @@ while True:
     user_answer = input()
     if try_again(user_answer):
         prompt('try_again_answer', 0)
+        time.sleep(1.5)
+        os.system('clear')
     else:
         prompt('try_again_answer', 1)
         break
