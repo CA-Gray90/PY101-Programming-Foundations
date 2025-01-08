@@ -54,16 +54,24 @@ def language_select():
         print("Invalid input, please enter either 'en' or 'au' ")
         answer = input().casefold()
 
+def calculation(operation_choice, num_1, num_2):
+    if num_2 == 0 and operation_choice == '4':    # Check for division by Zero
+        prompt('division_by_zero')
+        return None
+    
+    return OPERATION_DICT[operation_choice][1](num_1, num_2)
+
 # PROGRAM START
 os.system('clear')
 LANG = language_select()
 
-operation_dict = {
-    '1' : '+',
-    '2' : '-',
-    '3' : '*',
-    '4' : '/'
+OPERATION_DICT = {
+    '1' : ['+', lambda x, y: x + y], 
+    '2' : ['-', lambda x, y: x - y],
+    '3' : ['*', lambda x, y: x * y],
+    '4' : ['/', lambda x, y: x / y]
 }
+
 os.system('clear')
 
 prompt('greeting')
@@ -91,33 +99,21 @@ while True:
     prompt('operation_options')
     operation = input()
 
-    while operation not in ['1', '2', '3', '4']:    # Operation validity check
+    while operation not in OPERATION_DICT: #['1', '2', '3', '4']:    # Operation validity check
         prompt('invalid_operation_message')
         operation = input()
 
-    match operation:
-        case '1':
-            RESULT = num_1 + num_2
-        case '2':
-            RESULT = num_1 - num_2
-        case '3':
-            RESULT = num_1 * num_2
-        case '4':
-            if num_2 != 0:    # Check for division by Zero
-                RESULT = num_1 / num_2
-            else:
-                prompt('division_by_zero')
-                RESULT = None
+    RESULT = calculation(operation, num_1, num_2)
 
     if RESULT is not None:
         prompt('result_message')
-        print(f'{num_1} {operation_dict[operation]} {num_2} = {RESULT}')
+        print(f'{num_1} {OPERATION_DICT[operation][0]} {num_2} = {RESULT}')
 
     prompt('try_again_message')
     user_answer = input()
     if try_again(user_answer):
         prompt('try_again_answer', 0)
-        time.sleep(1.5)
+        time.sleep(1)
         os.system('clear')
     else:
         prompt('try_again_answer', 1)
