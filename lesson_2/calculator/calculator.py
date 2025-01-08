@@ -1,10 +1,7 @@
 # IMPORTS
 import json
-
 import math
-
 import os
-
 import time
 
 with open('calculator_messages.json', 'r') as file:
@@ -16,6 +13,23 @@ def prompt(message, index=None):
         print(f'==> {MESSAGES[LANG][message][index]}')
     else:
         print(f'==> {MESSAGES[LANG][message]}')
+
+def language_select():
+    print("! Please select a language: "
+           "'en' for English, 'au' for Australian")
+    answer = input().casefold()
+
+    while True:
+        if answer in ['en', 'english']:
+            print('English selected...')
+            time.sleep(1)
+            return 'en'
+        if answer in ['au', 'australian']:
+            print('Aussie lingo selected...')
+            time.sleep(1)
+            return 'au'
+        print("Invalid input, please enter either 'en' or 'au' ")
+        answer = input().casefold()
 
 def invalid_num(number_str):
     try:
@@ -37,22 +51,21 @@ def try_again(answer):
         prompt('invalid_try_again')
         answer = input()
 
-def language_select():
-    print("! Please select a language: "
-           "'en' for English, 'au' for Australian")
-    answer = input().casefold()
+def get_number():
+    user_num = input()
 
-    while True:
-        if answer in ['en', 'english']:
-            print('English selected...')
-            time.sleep(1)
-            return 'en'
-        if answer in ['au', 'australian']:
-            print('Aussie lingo selected...')
-            time.sleep(1)
-            return 'au'
-        print("Invalid input, please enter either 'en' or 'au' ")
-        answer = input().casefold()
+    while invalid_num(user_num):   # Validity Check
+        prompt('invalid_num_message')
+        user_num = input()
+
+    return float(user_num)
+
+def get_operator():
+    user_op = input()
+    while user_op not in OPERATION_DICT: # Operation validity check
+        prompt('invalid_operation_message')
+        user_op = input()
+    return user_op
 
 def calculation(operation_choice, num_1, num_2):
     if num_2 == 0 and operation_choice == '4':    # Check for division by Zero
@@ -61,55 +74,39 @@ def calculation(operation_choice, num_1, num_2):
     
     return OPERATION_DICT[operation_choice][1](num_1, num_2)
 
+# CONSTANTS
+OPERATION_DICT = {
+    '1' : ['+', (lambda x, y: x + y)], 
+    '2' : ['-', (lambda x, y: x - y)],
+    '3' : ['*', (lambda x, y: x * y)],
+    '4' : ['/', (lambda x, y: x / y)]
+}
+
 # PROGRAM START
 os.system('clear')
 LANG = language_select()
 
-OPERATION_DICT = {
-    '1' : ['+', lambda x, y: x + y], 
-    '2' : ['-', lambda x, y: x - y],
-    '3' : ['*', lambda x, y: x * y],
-    '4' : ['/', lambda x, y: x / y]
-}
-
 os.system('clear')
-
 prompt('greeting')
 
 while True:
     prompt('num_prompt', 0)
-    num_1 = input()
-
-    while invalid_num(num_1):   # Validity Check
-        prompt('invalid_num_message')
-        num_1 = input()
-
-    num_1 = float(num_1)
+    num_1 = get_number()
 
     prompt('num_prompt', 1)
-    num_2 = input()
-
-    while invalid_num(num_2):
-        prompt('invalid_num_message')
-        num_2 = input()
-
-    num_2 = float(num_2)
+    num_2 = get_number()
 
     prompt('operation_message')
     prompt('operation_options')
-    operation = input()
-
-    while operation not in OPERATION_DICT: #['1', '2', '3', '4']:    # Operation validity check
-        prompt('invalid_operation_message')
-        operation = input()
+    operation = get_operator()
 
     RESULT = calculation(operation, num_1, num_2)
 
-    if RESULT is not None:
+    if RESULT is not None: # Check that we didn't attempt division by zero
         prompt('result_message')
         print(f'{num_1} {OPERATION_DICT[operation][0]} {num_2} = {RESULT}')
 
-    prompt('try_again_message')
+    prompt('try_again_message') # Try again
     user_answer = input()
     if try_again(user_answer):
         prompt('try_again_answer', 0)
