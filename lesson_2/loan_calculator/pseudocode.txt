@@ -67,4 +67,3 @@ Yes / No Subprocess:
         ELSE:
             DISPLAY: Try again, yes or no
             GET Value from user
-    

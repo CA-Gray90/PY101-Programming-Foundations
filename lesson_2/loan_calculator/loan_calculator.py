@@ -40,6 +40,35 @@ def get_loan():
                 display(error_message_loan)
                 loan = prompt()
             return loan
+   
+def get_loan_duration():
+    display('Please enter the loan duration in years and months.')
+    display('Years:')
+    duration_years = prompt()
+    duration_years = valid_loan_duration(duration_years)
+
+    display('Months:')
+    duration_months = prompt()
+    duration_months = valid_loan_duration(duration_months)
+
+    return calc_loan_duration(duration_years, duration_months)
+        
+def valid_loan_duration(duration):
+    while True:
+        try:
+            if duration == '':
+                return 0
+            duration = int(duration)
+        except ValueError:
+            display ('Invalid input, please enter a whole number.')
+            duration = prompt()
+        else:
+            return duration
+
+def calc_loan_duration(years, months):
+    return (years * 12) + months
 
 # loan = get_loan()
 # print(f'{loan:,.2f}')
+# duration = get_loan_duration()
+# print(duration)
