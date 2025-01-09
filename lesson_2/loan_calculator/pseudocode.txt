@@ -1,0 +1,70 @@
+Loan Calculator program
+PSEUDOCODE HIGHLEVEL:
+1. Welcome user to loan Calculator
+2. Provide brief explanation on purpose of program
+3. Get inputs from user:
+    - Get Loan amount in $
+    - Get loan duration in years and months
+    - Get APR as a %
+4. Calculate monthly interest rate (APR / 12) and set it to variable: monthly_interest_rate
+5. Calculate loan duration in months, set it to another variable: total_duration_months
+6. Calculate the monthly payment rate and assign it to a variable: monthly_payment
+7. Display the resulting monthly payment
+8. Ask the user if they want to use the calculator again
+
+FORMAL PSEUDOCODE:
+CLEAR console
+PRINT Welcome user, explanation of app
+WHILE keep going
+    GET loan amount in $
+    GET loan duration in years and months
+        SET user_years - loan in years
+        SET user_months - loan in months
+    GET APR as a percentage %
+
+    SET monthly_interest_rate to:
+        SUBPROCESS: Calculate monthly interest rate (APR / 12)
+
+    SET total_duration_months to:
+        SUBPROCESS: Calculate loan duration in months (user_years * 12 ) + user_months
+
+    SET monthly_payment to:
+        SUBPROCESS: Calculate monthly payment rate: m = p * (j / (1 - (1 + j)**(-n)))
+
+    DISPLAY the resulting monthly payment
+    GET user input to use app again
+        IF yes: 
+            go back to start: keep going = True
+            CLEAR console
+        ELSE no:
+            exit loop: keep going = False
+END
+
+Get Loan Amount:
+DISPLAY: Please enter loan amount:
+GET Loan_Amount:
+WHILE True:
+    IF Loan_Amount != a number:
+        DISPLAY: Invalid input, try again:
+        GET Loan_Amount
+    ELSE Loan_Amount is a number:
+        DISPLAY: Is this correct? y / n
+        DISPLAY Loan_Amount rounded to 2 decimal places.
+            GET user answer yes / no SUBPROCESS - yes = True, no = False
+            IF True:
+                Return Loan amount
+            ELSE False:
+                DISPLAY: Please enter loan amount again:
+                GET Loan_Amount
+
+Yes / No Subprocess:
+    GET Value from user: (y / n)
+    While True:
+        If Value.casefold() in ['y', 'yes']:
+            return True
+        IF Vvalue.casefold in [n, no]:
+            return False
+        ELSE:
+            DISPLAY: Try again, yes or no
+            GET Value from user
+    
