@@ -7,15 +7,15 @@ def display(text):
 def prompt(prefix=''):
     return input(f'--> {prefix}')
 
-def ask_yes_or_no():
-    answer = prompt().casefold()
+def yes_or_no(answer):
+    answer = answer.casefold()
     while True:
         if answer in ['y', 'yes']:
             return True
         if answer in ['n', 'no']:
             return False
         else:
-            display("Please try again, 'y' for Yes, 'n' for No")
+            display("Please try again; 'y' for Yes, 'n' for No")
             answer = prompt()
 
 def welcome():
@@ -36,41 +36,48 @@ def get_loan():
             ' only):')
     loan = prompt('$')
 
-    error_message_loan = ('Invalid input. Please enter a $ amount with numeric'
-                     ' characters and/or commas only:')
+    error_message_loan = ('Invalid input. Please enter a positive dollar'
+                          ' amount. Numbers and commas only:')
     while True:
         try:
             loan = float(''.join(loan.split(',')))
         except ValueError:
             display(error_message_loan)
             loan = prompt('$')
-        else:
-            if math.isnan(loan) or math.isinf(loan):
-                display(error_message_loan)
-                loan = prompt('$')
-            return loan
+            continue
+        if math.isnan(loan) or math.isinf(loan) or loan < 0:
+            display(error_message_loan)
+            loan = prompt('$')
+            continue
+        return loan
    
 def get_loan_duration():
-    display('Please enter the loan duration in Years and Months.')
-    duration_years = prompt('Years: ')
-    duration_years = valid_loan_duration(duration_years)
+    while True:
+        display('Please enter the loan duration in Years and Months.')
+        duration_years = prompt('Years: ')
+        duration_years = valid_loan_duration(duration_years)
 
-    duration_months = prompt('Months: ')
-    duration_months = valid_loan_duration(duration_months)
+        duration_months = prompt('Months: ')
+        duration_months = valid_loan_duration(duration_months)
 
-    if duration_months >= 12:
-        duration_years = duration_years + duration_months // 12
-        duration_months = duration_months % 12
-    return (duration_years, duration_months)
+        if (duration_months + duration_years) == 0:
+            display('Duration must be at least 1 month.')
+            continue
+        if duration_months >= 12:
+            duration_years = duration_years + duration_months // 12
+            duration_months = duration_months % 12
+        return (duration_years, duration_months)
         
 def valid_loan_duration(duration):
     while True:
         try:
-            if duration == '':
+            if duration == '':                        # If field is left blank
                 return 0
             duration = int(duration)
+            if duration < 0:
+                raise ValueError
         except ValueError:
-            display ('Invalid input, please enter a whole number.')
+            display ('Invalid input, please enter a positive whole number.')
             duration = prompt()
         else:
             return duration
@@ -82,11 +89,10 @@ def get_apr():
     display('What is your Annual Percentage Rate, or APR?')
     user_apr = prompt('% ')
 
-    error_message_apr = 'Invalid input, please enter a percentage out of 100:'
+    error_message_apr = 'Invalid input, please enter a percentage out of 100%:'
     while True:
         if user_apr == '':
             return 0
-
         try:
             user_apr = float(user_apr)
         except ValueError:
@@ -102,6 +108,7 @@ def get_apr():
         if user_apr >= 0 and user_apr <= 100:
             return (user_apr / 100)
         display(error_message_apr)
+        user_apr = prompt('% ')
 
 def monthly_interest_rate(apr):
     return (apr / 12)
@@ -114,9 +121,8 @@ def monthly_payment(loan, monthly_interest, duration_months):
 
 def try_again():
     display('Would you like to calculate another loan repayment? y/n')
-    if ask_yes_or_no():
-        return True
-    return False
+    user_answer = prompt()
+    return True if yes_or_no(user_answer) else False
 
 # Program Start #
 os.system('clear')
@@ -145,4 +151,4 @@ while True:
         break
     os.system('clear')
 
-display('Exiting Program...')
+display('Program Terminated.')
