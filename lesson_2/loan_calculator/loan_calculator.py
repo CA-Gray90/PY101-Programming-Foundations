@@ -90,8 +90,6 @@ def get_apr():
 
     error_message_apr = 'Invalid input, please enter a percentage out of 100%:'
     while True:
-        # if user_apr == '':
-        #     return 0
         try:
             user_apr = float(user_apr)
 
