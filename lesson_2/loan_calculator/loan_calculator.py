@@ -19,8 +19,10 @@ def ask_yes_or_no():
 
 def welcome():
     display('Welcome to the Loan Calculator!')
+    print()
     display('This Loan Calculator calculates your monthly mortgage or car'
             ' repayments.\n*Interest is assumed to be compounded monthly.')
+    print()
 
 def get_loan():
     display('Please enter your loan amount in $ (enter numerals and commas'
@@ -109,13 +111,14 @@ def try_again():
 
 # Program Start #
 
-# welcome()
-# while True:
-#     USER_LOAN = get_loan()
-#     USER_DURATION = get_loan_duration()
-#     YEARLY_APR = get_apr()
-#     MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
-#     MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
-#     print(f'{MONTHLY_REPAYMENT:.2f}')
-#     if not try_again():
-#         break
+welcome()
+while True:
+    USER_LOAN = get_loan()
+    USER_DURATION = get_loan_duration()
+    YEARLY_APR = get_apr()
+    MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
+    MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
+    display(f'Your monthly repayment for the next {USER_DURATION} months'
+            f' will be: ${MONTHLY_REPAYMENT:.2f}')
+    if not try_again():
+        break
