@@ -1,4 +1,5 @@
 import math
+import os
 
 def display(text):
     print(f'# {text}')
@@ -51,7 +52,7 @@ def get_loan_duration():
     duration_months = prompt('Months:')
     duration_months = valid_loan_duration(duration_months)
 
-    return loan_total_months(duration_years, duration_months)
+    return (duration_years, duration_months)
         
 def valid_loan_duration(duration):
     while True:
@@ -110,15 +111,24 @@ def try_again():
     return False
 
 # Program Start #
+os.system('clear')
 
 welcome()
 while True:
     USER_LOAN = get_loan()
-    USER_DURATION = get_loan_duration()
+    DURATION_YRS, DURATION_MONTHS = get_loan_duration()
+    TOTAL_DURATION = loan_total_months(DURATION_YRS, DURATION_MONTHS)
     YEARLY_APR = get_apr()
     MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
-    MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
-    display(f'Your monthly repayment for the next {USER_DURATION} months'
-            f' will be: ${MONTHLY_REPAYMENT:.2f}')
+    MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, TOTAL_DURATION)
+    print()
+    
+    display(f'Your monthly repayment for the next {DURATION_YRS} years and'
+            f' {DURATION_MONTHS} months will be: ${MONTHLY_REPAYMENT:.2f}')
+    print()
+    
     if not try_again():
         break
+    os.system('clear')
+
+display('Exiting Program...')
