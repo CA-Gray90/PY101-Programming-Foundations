@@ -6,7 +6,7 @@ def display(text):
 def prompt():
     return input('--> ')
 
-def yes_or_no():
+def ask_yes_or_no():
     answer = prompt().casefold()
     while True:
         if answer in ['y', 'yes']:
@@ -15,7 +15,7 @@ def yes_or_no():
             return False
         else:
             display("Please try again, 'y' for Yes, 'n' for No")
-            answer = prompt().casefold()
+            answer = prompt()
 
 def welcome():
     display('Welcome to the Loan Calculator!')
@@ -104,17 +104,21 @@ def monthly_payment(loan, monthly_interest, duration_months):
     
     return monthly_payment
 
+def try_again():
+    display('Would you like to calculate another loan repayment? y/n')
+    if ask_yes_or_no():
+        return True
+    return False
+
 # Program Start #
 
-    
-# loan = get_loan()
-# print(f'{loan:,.2f}')
-# duration = get_loan_duration()
-# print(duration)
 welcome()
-USER_LOAN = get_loan()
-USER_DURATION = get_loan_duration()
-YEARLY_APR = get_apr()
-MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
-MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
-print(f'{MONTHLY_REPAYMENT:.2f}')
+while True:
+    USER_LOAN = get_loan()
+    USER_DURATION = get_loan_duration()
+    YEARLY_APR = get_apr()
+    MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
+    MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
+    print(f'{MONTHLY_REPAYMENT:.2f}')
+    if not try_again():
+        break
