@@ -41,11 +41,10 @@ def get_loan():
     while True:
         try:
             loan = float(''.join(loan.split(',')))
+
+            if math.isnan(loan) or math.isinf(loan) or loan < 0:
+                raise ValueError
         except ValueError:
-            display(error_message_loan)
-            loan = prompt('$')
-            continue
-        if math.isnan(loan) or math.isinf(loan) or loan < 0:
             display(error_message_loan)
             loan = prompt('$')
             continue
@@ -70,17 +69,17 @@ def get_loan_duration():
         
 def valid_loan_duration(duration):
     while True:
+        if duration == '':                        # If field is left blank
+            return 0
         try:
-            if duration == '':                        # If field is left blank
-                return 0
             duration = int(duration)
             if duration < 0:
                 raise ValueError
         except ValueError:
             display ('Invalid input, please enter a positive whole number.')
-            duration = prompt()
-        else:
-            return duration
+            duration = prompt()     
+            continue
+        return duration
 
 def loan_total_months(years, months):
     return (years * 12) + months
@@ -91,32 +90,31 @@ def get_apr():
 
     error_message_apr = 'Invalid input, please enter a percentage out of 100%:'
     while True:
-        if user_apr == '':
-            return 0
+        # if user_apr == '':
+        #     return 0
         try:
             user_apr = float(user_apr)
+
+            if math.isnan(user_apr) or math.isinf(user_apr):
+                raise ValueError
+            if user_apr < 0 or user_apr > 100:
+                raise ValueError
         except ValueError:
             display(error_message_apr)
             user_apr = prompt('% ')
             continue
-        else:
-            if math.isnan(user_apr) or math.isinf(user_apr):
-                display(error_message_apr)
-                user_apr = prompt('% ')
-                continue
-
-        if user_apr >= 0 and user_apr <= 100:
-            return (user_apr / 100)
-        display(error_message_apr)
-        user_apr = prompt('% ')
+        return (user_apr / 100)
 
 def monthly_interest_rate(apr):
     return (apr / 12)
 
 def monthly_payment(loan, monthly_interest, duration_months):
-    monthly_payment = loan * \
-        (monthly_interest / (1 - (1 + monthly_interest)**(-duration_months)))
-    
+    if monthly_interest > 0:
+        monthly_payment = loan * \
+            (monthly_interest / (1 - (1 + monthly_interest)\
+                                 **(-duration_months)))
+    else:
+        monthly_payment = loan / duration_months  
     return monthly_payment
 
 def try_again():
