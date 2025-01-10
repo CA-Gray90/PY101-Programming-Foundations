@@ -79,8 +79,7 @@ def loan_total_months(years, months):
     return (years * 12) + months
 
 def get_apr():
-    display('What is your Annual Percentage Rate, or APR?'
-            ' (Please enter as a %):')
+    display('What is your Annual Percentage Rate, or APR?')
     user_apr = prompt('% ')
 
     error_message_apr = 'Invalid input, please enter a percentage out of 100:'
@@ -128,6 +127,8 @@ os.system('clear')
 
 while True:
     display('Loan Calculator')
+    print()
+
     USER_LOAN = get_loan()
     DURATION_YRS, DURATION_MONTHS = get_loan_duration()
     TOTAL_DURATION = loan_total_months(DURATION_YRS, DURATION_MONTHS)
