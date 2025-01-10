@@ -3,8 +3,8 @@ import math
 def display(text):
     print(f'# {text}')
 
-def prompt():
-    return input('--> ')
+def prompt(prefix=''):
+    return input(f'--> {prefix}')
 
 def ask_yes_or_no():
     answer = prompt().casefold()
@@ -23,33 +23,30 @@ def welcome():
             ' repayments.\n*Interest is assumed to be compounded monthly.')
 
 def get_loan():
-    error_message_loan = ('Invalid input. Please enter a $ amount with numeric'
-                     ' characters and/or commas only:')
-    
     display('Please enter your loan amount in $ (enter numerals and commas'
             ' only):')
-    loan = prompt()
+    loan = prompt('$')
+
+    error_message_loan = ('Invalid input. Please enter a $ amount with numeric'
+                     ' characters and/or commas only:')
     while True:
-        loan = loan.strip('$')
         try:
             loan = float(''.join(loan.split(',')))
         except ValueError:
             display(error_message_loan)
-            loan = prompt()
+            loan = prompt('$')
         else:
             if math.isnan(loan) or math.isinf(loan):
                 display(error_message_loan)
-                loan = prompt()
+                loan = prompt('$')
             return loan
    
 def get_loan_duration():
-    display('Please enter the loan duration in years and months.')
-    display('Years:')
-    duration_years = prompt()
+    display('Please enter the loan duration in Years and Months.')
+    duration_years = prompt('Years:')
     duration_years = valid_loan_duration(duration_years)
 
-    display('Months:')
-    duration_months = prompt()
+    duration_months = prompt('Months:')
     duration_months = valid_loan_duration(duration_months)
 
     return loan_total_months(duration_years, duration_months)
@@ -70,12 +67,12 @@ def loan_total_months(years, months):
     return (years * 12) + months
 
 def get_apr():
-    error_message_apr = 'Invalid input, please enter a percentage out of 100:'
     display('What is your Annual Percentage Rate, or APR?'
             ' (Please enter as a %):')
-    user_apr = prompt()
+    user_apr = prompt('%')
+
+    error_message_apr = 'Invalid input, please enter a percentage out of 100:'
     while True:
-        user_apr = user_apr.strip('%')
         if user_apr == '':
             return 0
 
@@ -83,12 +80,12 @@ def get_apr():
             user_apr = float(user_apr)
         except ValueError:
             display(error_message_apr)
-            user_apr = prompt()
+            user_apr = prompt('%')
             continue
         else:
             if math.isnan(user_apr) or math.isinf(user_apr):
                 display(error_message_apr)
-                user_apr = prompt()
+                user_apr = prompt('%')
                 continue
 
         if user_apr >= 0 and user_apr <= 100:
@@ -112,13 +109,13 @@ def try_again():
 
 # Program Start #
 
-welcome()
-while True:
-    USER_LOAN = get_loan()
-    USER_DURATION = get_loan_duration()
-    YEARLY_APR = get_apr()
-    MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
-    MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
-    print(f'{MONTHLY_REPAYMENT:.2f}')
-    if not try_again():
-        break
+# welcome()
+# while True:
+#     USER_LOAN = get_loan()
+#     USER_DURATION = get_loan_duration()
+#     YEARLY_APR = get_apr()
+#     MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
+#     MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
+#     print(f'{MONTHLY_REPAYMENT:.2f}')
+#     if not try_again():
+#         break
