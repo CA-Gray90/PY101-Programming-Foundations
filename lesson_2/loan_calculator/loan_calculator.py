@@ -14,9 +14,8 @@ def yes_or_no(answer):
             return True
         if answer in ['n', 'no']:
             return False
-        else:
-            display("Please try again; 'y' for Yes, 'n' for No")
-            answer = prompt()
+        display("Please try again; 'y' for Yes, 'n' for No")
+        answer = prompt()
 
 def welcome():
     display('Welcome to the Loan Calculator!')
@@ -49,7 +48,7 @@ def get_loan():
             loan = prompt('$')
             continue
         return loan
-   
+
 def get_loan_duration():
     while True:
         display('Please enter the loan duration in Years and Months.')
@@ -66,7 +65,7 @@ def get_loan_duration():
             duration_years = duration_years + duration_months // 12
             duration_months = duration_months % 12
         return (duration_years, duration_months)
-        
+
 def valid_loan_duration(duration):
     while True:
         if duration == '':                        # If field is left blank
@@ -77,7 +76,7 @@ def valid_loan_duration(duration):
                 raise ValueError
         except ValueError:
             display ('Invalid input, please enter a positive whole number.')
-            duration = prompt()     
+            duration = prompt()
             continue
         return duration
 
@@ -101,24 +100,24 @@ def get_apr():
             display(error_message_apr)
             user_apr = prompt('% ')
             continue
-        return (user_apr / 100)
+        return user_apr / 100
 
 def monthly_interest_rate(apr):
-    return (apr / 12)
+    return apr / 12
 
-def monthly_payment(loan, monthly_interest, duration_months):
+def calc_monthly_payment(loan, monthly_interest, duration_months):
     if monthly_interest > 0:
         monthly_payment = loan * \
             (monthly_interest / (1 - (1 + monthly_interest)\
                                  **(-duration_months)))
     else:
-        monthly_payment = loan / duration_months  
+        monthly_payment = loan / duration_months
     return monthly_payment
 
 def try_again():
     display('Would you like to calculate another loan repayment? y/n')
     user_answer = prompt()
-    return True if yes_or_no(user_answer) else False
+    return yes_or_no(user_answer)
 
 # Program Start #
 os.system('clear')
@@ -136,13 +135,14 @@ while True:
     TOTAL_DURATION = loan_total_months(DURATION_YRS, DURATION_MONTHS)
     YEARLY_APR = get_apr()
     MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
-    MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, TOTAL_DURATION)
+    MONTHLY_REPAYMENT = \
+        calc_monthly_payment(USER_LOAN, MONTHLY_APR, TOTAL_DURATION)
     print()
-    
+
     display(f'Your monthly repayment for the next {DURATION_YRS} year/s and'
             f' {DURATION_MONTHS} month/s will be: ${MONTHLY_REPAYMENT:.2f}')
     print()
-    
+
     if not try_again():
         break
     os.system('clear')
