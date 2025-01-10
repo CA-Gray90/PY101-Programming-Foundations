@@ -58,6 +58,9 @@ def get_loan_duration():
     duration_months = prompt('Months: ')
     duration_months = valid_loan_duration(duration_months)
 
+    if duration_months >= 12:
+        duration_years = duration_years + duration_months // 12
+        duration_months = duration_months % 12
     return (duration_years, duration_months)
         
 def valid_loan_duration(duration):
@@ -121,8 +124,10 @@ os.system('clear')
 
 welcome()
 enter_to_continue()
+os.system('clear')
 
 while True:
+    display('Loan Calculator')
     USER_LOAN = get_loan()
     DURATION_YRS, DURATION_MONTHS = get_loan_duration()
     TOTAL_DURATION = loan_total_months(DURATION_YRS, DURATION_MONTHS)
@@ -131,8 +136,8 @@ while True:
     MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, TOTAL_DURATION)
     print()
     
-    display(f'Your monthly repayment for the next {DURATION_YRS} years and'
-            f' {DURATION_MONTHS} months will be: ${MONTHLY_REPAYMENT:.2f}')
+    display(f'Your monthly repayment for the next {DURATION_YRS} year/s and'
+            f' {DURATION_MONTHS} month/s will be: ${MONTHLY_REPAYMENT:.2f}')
     print()
     
     if not try_again():
