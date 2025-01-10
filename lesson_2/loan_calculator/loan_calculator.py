@@ -20,16 +20,17 @@ def yes_or_no():
 def welcome():
     display('Welcome to the Loan Calculator!')
     display('This Loan Calculator calculates your monthly mortgage or car'
-            ' repayments')
+            ' repayments.\n*Interest is assumed to be compounded monthly.')
 
 def get_loan():
-    error_message_loan = ('Invalid input. Please enter a number with numeric'
+    error_message_loan = ('Invalid input. Please enter a $ amount with numeric'
                      ' characters and/or commas only:')
     
     display('Please enter your loan amount in $ (enter numerals and commas'
             ' only):')
     loan = prompt()
     while True:
+        loan = loan.strip('$')
         try:
             loan = float(''.join(loan.split(',')))
         except ValueError:
@@ -51,7 +52,7 @@ def get_loan_duration():
     duration_months = prompt()
     duration_months = valid_loan_duration(duration_months)
 
-    return calc_loan_duration(duration_years, duration_months)
+    return loan_total_months(duration_years, duration_months)
         
 def valid_loan_duration(duration):
     while True:
@@ -65,10 +66,55 @@ def valid_loan_duration(duration):
         else:
             return duration
 
-def calc_loan_duration(years, months):
+def loan_total_months(years, months):
     return (years * 12) + months
 
+def get_apr():
+    error_message_apr = 'Invalid input, please enter a percentage out of 100:'
+    display('What is your Annual Percentage Rate, or APR?'
+            ' (Please enter as a %):')
+    user_apr = prompt()
+    while True:
+        user_apr = user_apr.strip('%')
+        if user_apr == '':
+            return 0
+
+        try:
+            user_apr = float(user_apr)
+        except ValueError:
+            display(error_message_apr)
+            user_apr = prompt()
+            continue
+        else:
+            if math.isnan(user_apr) or math.isinf(user_apr):
+                display(error_message_apr)
+                user_apr = prompt()
+                continue
+
+        if user_apr >= 0 and user_apr <= 100:
+            return (user_apr / 100)
+        display(error_message_apr)
+
+def monthly_interest_rate(apr):
+    return (apr / 12)
+
+def monthly_payment(loan, monthly_interest, duration_months):
+    monthly_payment = loan * \
+        (monthly_interest / (1 - (1 + monthly_interest)**(-duration_months)))
+    
+    return monthly_payment
+
+# Program Start #
+
+    
 # loan = get_loan()
 # print(f'{loan:,.2f}')
 # duration = get_loan_duration()
 # print(duration)
+welcome()
+USER_LOAN = get_loan()
+USER_DURATION = get_loan_duration()
+YEARLY_APR = get_apr()
+MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
+MONTHLY_REPAYMENT = monthly_payment(USER_LOAN, MONTHLY_APR, USER_DURATION)
+print(f'{MONTHLY_REPAYMENT:.2f}')

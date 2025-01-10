@@ -30,6 +30,10 @@ WHILE keep going
 
     SET monthly_payment to:
         SUBPROCESS: Calculate monthly payment rate: m = p * (j / (1 - (1 + j)**(-n)))
+        m = monthly payments
+        p = loan amount
+        j = monthly interest rate
+        n = duration in months
 
     DISPLAY the resulting monthly payment
     GET user input to use app again
@@ -67,3 +71,23 @@ Yes / No Subprocess:
         ELSE:
             DISPLAY: Try again, yes or no
             GET Value from user
+
+get_apr:
+GET user apr as %:
+WHILE TRUE:
+    IF user apr == '' or '%':                       # If left blank
+        return 0
+    SET user_apr to ''.join(user apr.strip('%'))    # strip out the '%' if present
+    TRY:                                            # attempt int coercion
+        user_apr = int(user_apr)
+    EXCEPT ValueError:
+        DISPLAY: Error message
+        GET user apr again
+        continue
+    
+    IF user_apr not in range(0, 101):               # check is a number from 0 - 100
+        DISPLAY: Invalid input, needs to be a percentage out of 100%
+        GET user apr again
+        continue
+    ELSE:
+        return user_apr
