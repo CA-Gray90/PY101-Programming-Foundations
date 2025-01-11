@@ -1,5 +1,9 @@
 import math
 import os
+import json
+
+with open('loan_calc_messages.json', 'r') as message_file:
+    MESSAGE = json.load(message_file)
 
 MONTHS_IN_YEAR = 12
 
@@ -16,29 +20,25 @@ def yes_or_no(answer):
             return True
         if answer in ['n', 'no']:
             return False
-        display("Please try again; 'y' for Yes, 'n' for No")
+        display(MESSAGE['retry_yes_no'])
         answer = prompt()
 
 def welcome():
-    display('Welcome to the Loan Calculator!')
+    display(MESSAGE['welcome'])
     print()
-    display('This Loan Calculator calculates your monthly mortgage or car'
-            ' repayments.\n*Interest is assumed to be compounded monthly.')
+    display(MESSAGE['explain_app'])
     print()
 
 def enter_to_continue():
     while True:
-        display("Press 'enter' to continue.")
+        display(MESSAGE['enter_app'])
         input()
         break
 
 def get_loan():
-    display('Please enter your loan amount in $ (enter numerals and commas'
-            ' only):')
+    display(MESSAGE['enter_loan'])
     loan = prompt('$')
-
-    error_message_loan = ('Invalid input. Please enter a positive dollar'
-                          ' amount. Numbers and commas only:')
+    
     while True:
         try:
             loan = float(''.join(loan.split(',')))
@@ -46,14 +46,14 @@ def get_loan():
             if math.isnan(loan) or math.isinf(loan) or loan < 0:
                 raise ValueError
         except ValueError:
-            display(error_message_loan)
+            display(MESSAGE['invalid_loan'])
             loan = prompt('$')
             continue
         return loan
 
 def get_loan_duration():
     while True:
-        display('Please enter the loan duration in Years and Months.')
+        display(MESSAGE['enter_duration'])
         duration_years = prompt('Years: ')
         duration_years = valid_loan_duration(duration_years)
 
@@ -61,7 +61,7 @@ def get_loan_duration():
         duration_months = valid_loan_duration(duration_months)
 
         if (duration_months + duration_years) == 0:
-            display('Duration must be at least 1 month.')
+            display(MESSAGE['invalid_duration_length'])
             continue
         if duration_months >= MONTHS_IN_YEAR:
             duration_years = duration_years + \
@@ -78,7 +78,7 @@ def valid_loan_duration(duration):
             if duration < 0:
                 raise ValueError
         except ValueError:
-            display ('Invalid input, please enter a positive whole number.')
+            display (MESSAGE['invalid_duration_num'])
             duration = prompt()
             continue
         return duration
@@ -87,10 +87,9 @@ def loan_total_months(years, months):
     return (years * MONTHS_IN_YEAR) + months
 
 def get_apr():
-    display('What is your Annual Percentage Rate, or APR?')
+    display(MESSAGE['enter_apr'])
     user_apr = prompt('% ')
 
-    error_message_apr = 'Invalid input, please enter a percentage out of 100%:'
     while True:
         try:
             user_apr = float(user_apr)
@@ -100,7 +99,7 @@ def get_apr():
             if user_apr < 0 or user_apr > 100:
                 raise ValueError
         except ValueError:
-            display(error_message_apr)
+            display(MESSAGE['invalid_apr'])
             user_apr = prompt('% ')
             continue
         return user_apr / 100
@@ -118,7 +117,7 @@ def calc_monthly_payment(loan, monthly_interest, duration_months):
     return monthly_payment
 
 def try_again():
-    display('Would you like to calculate another loan repayment? y/n')
+    display(MESSAGE['retry_message'])
     user_answer = prompt()
     return yes_or_no(user_answer)
 
@@ -130,7 +129,7 @@ enter_to_continue()
 os.system('clear')
 
 while True:
-    display('Loan Calculator')
+    display(MESSAGE['title'])
     print()
 
     USER_LOAN = get_loan()
@@ -150,4 +149,4 @@ while True:
         break
     os.system('clear')
 
-display('Program Terminated.')
+display(MESSAGE['program_end'])

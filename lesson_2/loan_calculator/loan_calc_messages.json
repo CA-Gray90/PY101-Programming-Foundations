@@ -10,5 +10,7 @@
     "enter_apr" : "What is your Annual Percentage Rate, or APR?",
     "invalid_apr" : "Invalid input, please enter a percentage out of 100%:",
     "retry_message" : "Would you like to calculate another loan repayment? y/n",
-    "retry_yes_no" : "Please try again; 'y' for Yes, 'n' for No"
+    "retry_yes_no" : "Please try again; 'y' for Yes, 'n' for No",
+    "title" : " ---- Loan Calculator ----",
+    "program_end" : "Thank you for using Loan Calculator!\nProgram Terminated."
 }
