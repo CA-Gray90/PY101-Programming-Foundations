@@ -43,7 +43,7 @@ def get_loan():
         try:
             loan = float(''.join(loan.split(',')))
 
-            if math.isnan(loan) or math.isinf(loan) or loan < 0:
+            if math.isnan(loan) or math.isinf(loan) or loan <= 0:
                 raise ValueError
             
             if len(str(loan).split('.')[1]) > 2:
