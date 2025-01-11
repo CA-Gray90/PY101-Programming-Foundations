@@ -1,6 +1,8 @@
 import math
 import os
 
+MONTHS_IN_YEAR = 12
+
 def display(text):
     print(f'# {text}')
 
@@ -61,9 +63,10 @@ def get_loan_duration():
         if (duration_months + duration_years) == 0:
             display('Duration must be at least 1 month.')
             continue
-        if duration_months >= 12:
-            duration_years = duration_years + duration_months // 12
-            duration_months = duration_months % 12
+        if duration_months >= MONTHS_IN_YEAR:
+            duration_years = duration_years + \
+                (duration_months // MONTHS_IN_YEAR)
+            duration_months = duration_months % MONTHS_IN_YEAR
         return (duration_years, duration_months)
 
 def valid_loan_duration(duration):
@@ -81,7 +84,7 @@ def valid_loan_duration(duration):
         return duration
 
 def loan_total_months(years, months):
-    return (years * 12) + months
+    return (years * MONTHS_IN_YEAR) + months
 
 def get_apr():
     display('What is your Annual Percentage Rate, or APR?')
@@ -103,7 +106,7 @@ def get_apr():
         return user_apr / 100
 
 def monthly_interest_rate(apr):
-    return apr / 12
+    return apr / MONTHS_IN_YEAR
 
 def calc_monthly_payment(loan, monthly_interest, duration_months):
     if monthly_interest > 0:
