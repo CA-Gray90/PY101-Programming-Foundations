@@ -3,7 +3,7 @@
     "explain_app" : "This Loan Calculator calculates your monthly mortgage or car repayments.\n*Interest is assumed to be compounded monthly.",
     "enter_app" : "Press 'enter' to continue.",
     "enter_loan" : "Please enter your loan amount in $ (enter numerals and commas only):",
-    "invalid_loan" : "Invalid input. Please enter a positive dollar amount. Numbers and commas only:",
+    "invalid_loan" : "Invalid input. Please enter a positive dollar amount up to 2 decimal places. Numbers and commas only:",
     "enter_duration" : "Please enter the loan duration in Years and Months.",
     "invalid_duration_length" : "Duration must be at least 1 month.",
     "invalid_duration_num" : "Invalid input, please enter a positive whole number.",

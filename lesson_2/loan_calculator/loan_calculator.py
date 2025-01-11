@@ -45,12 +45,15 @@ def get_loan():
 
             if math.isnan(loan) or math.isinf(loan) or loan < 0:
                 raise ValueError
+            
+            if len(str(loan).split('.')[1]) > 2:
+                raise ValueError
         except ValueError:
             display(MESSAGE['invalid_loan'])
             loan = prompt('$')
             continue
         return loan
-
+    
 def get_loan_duration():
     while True:
         display(MESSAGE['enter_duration'])
@@ -121,32 +124,35 @@ def try_again():
     user_answer = prompt()
     return yes_or_no(user_answer)
 
-# Program Start #
-os.system('clear')
-
-welcome()
-enter_to_continue()
-os.system('clear')
-
-while True:
-    display(MESSAGE['title'])
-    print()
-
-    USER_LOAN = get_loan()
-    DURATION_YRS, DURATION_MONTHS = get_loan_duration()
-    TOTAL_DURATION = loan_total_months(DURATION_YRS, DURATION_MONTHS)
-    YEARLY_APR = get_apr()
-    MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
-    MONTHLY_REPAYMENT = \
-        calc_monthly_payment(USER_LOAN, MONTHLY_APR, TOTAL_DURATION)
-    print()
-
-    display(f'Your monthly repayment for the next {DURATION_YRS} year/s and'
-            f' {DURATION_MONTHS} month/s will be: ${MONTHLY_REPAYMENT:.2f}')
-    print()
-
-    if not try_again():
-        break
+def main():       
     os.system('clear')
 
-display(MESSAGE['program_end'])
+    welcome()
+    enter_to_continue()
+    os.system('clear')
+
+    while True:
+        display(MESSAGE['title'])
+        print()
+
+        USER_LOAN = get_loan()
+        DURATION_YRS, DURATION_MONTHS = get_loan_duration()
+        TOTAL_DURATION = loan_total_months(DURATION_YRS, DURATION_MONTHS)
+        YEARLY_APR = get_apr()
+        MONTHLY_APR = monthly_interest_rate(YEARLY_APR)
+        MONTHLY_REPAYMENT = \
+            calc_monthly_payment(USER_LOAN, MONTHLY_APR, TOTAL_DURATION)
+        print()
+
+        display(f'Your monthly repayment for the next {DURATION_YRS} year/s and'
+                f' {DURATION_MONTHS} month/s will be: ${MONTHLY_REPAYMENT:.2f}')
+        print()
+
+        if not try_again():
+            break
+        os.system('clear')
+
+    display(MESSAGE['program_end'])
+
+# Program start # 
+main()
