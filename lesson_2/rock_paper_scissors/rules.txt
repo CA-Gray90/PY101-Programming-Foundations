@@ -1,0 +1,17 @@
+Scissors cuts paper
+Paper covers rock
+Rock crushes Lizard
+Lizard poisons Spock
+Spock smashes Scissors
+Scissors decapitates Lizard
+Lizard eats paper
+paper disproves Spock
+Spock vaporizes Rock
+Rock crushes Scissors
+
+i.e.
+scissors beats paper/Lizard
+paper beats rock/Spock
+rock beats lizard/scissors
+lizard beats spock/paper
+Spock beats rock/scissors

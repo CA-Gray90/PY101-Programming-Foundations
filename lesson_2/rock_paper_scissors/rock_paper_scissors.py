@@ -1,19 +1,35 @@
 import random
 
-VALID_CHOICES = ['rock', 'paper', 'scissors']
+VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 
 def prompt(message):
     print(f'==> {message}')
 
 def display_winner(player, computer):
-    if ((player == 'rock' and computer == 'scissors') or
-        (player == 'paper' and computer == 'rock') or
-        (player == 'scissors' and computer == 'paper')):
+    if ((player == 'rock' and
+         (computer == 'scissors' or computer == 'lizard')) or
+        (player == 'paper' and
+         (computer == 'rock' or computer == 'spock')) or
+        (player == 'scissors' and
+         (computer == 'paper' or computer == 'lizard')) or
+        (player == 'lizard' and
+         (computer == 'spock' or computer == 'paper')) or
+        (player == 'spock' and
+         (computer == 'scissors' or computer == 'rock'))):
         return 'You win!'
-    elif ((player == 'scissors' and computer == 'rock') or
-        (player == 'rock' and computer == 'paper') or
-        (player == 'paper' and computer == 'scissors')):
+    
+    elif ((player == 'scissors' and
+           (computer == 'rock' or computer == 'spock')) or
+        (player == 'rock' and
+         (computer == 'paper' or computer == 'spock')) or
+        (player == 'paper' and
+         (computer == 'scissors' or computer == 'lizard')) or
+         (player == 'lizard' and
+          (computer == 'scissors' or computer == 'rock')) or
+          (player == 'spock' and
+           (computer == 'paper' or computer == 'lizard'))):
         return 'Computer wins!'
+    
     else:
         return "It's a tie!"
 
@@ -24,7 +40,8 @@ while keep_going:
     choice = input().lower()
 
     while choice not in VALID_CHOICES:
-        prompt("Invalid choice, please enter either 'rock', 'paper' or 'scissors'")
+        prompt("Invalid choice, please try again\n"
+               f"Your choices are: {VALID_CHOICES}")
         choice = input()
 
     computer_choice = random.choice(VALID_CHOICES)
@@ -43,4 +60,4 @@ while keep_going:
         answer = input().lower()
 
     if answer[0] == 'n':
-        keep_going = False
+        keep_going = False 
