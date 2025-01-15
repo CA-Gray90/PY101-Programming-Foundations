@@ -1,4 +1,5 @@
 import random
+import os
 
 VALID_CHOICES_DICT = {
     'r' : 'rock',
@@ -35,10 +36,11 @@ def display_welcome():
             'Spock vaporizes Rock,\n'
             'Rock crushes Scissors\n')
     prompt('All memorized? Very good! Best out of 5 wins, good luck!')
-    prompt('Hit Enter to begin...')
 
-def hit_enter():
+def enter_to_continue():
+    prompt('Hit Enter to continue...')
     input()
+    os.system('clear')
 
 def get_winner(player, computer):
     if ((player == 'rock' and
@@ -139,6 +141,8 @@ def get_grand_winner(winner_list):
 main_game_start = True
 
 while main_game_start:
+    os.system('clear')
+
     winner_list = []
     scores = {
         'player' : 0,
@@ -147,9 +151,12 @@ while main_game_start:
 
     main_game_title()
 
+    display_welcome()
+
+    enter_to_continue()
+
     while True:
-        display_welcome()
-        hit_enter()
+        main_game_title()
 
         display_scoreboard(scores['player'], scores['computer'])
         print()
@@ -166,6 +173,8 @@ while main_game_start:
         GRAND_WINNER = get_grand_winner(winner_list)
         if GRAND_WINNER:
             break
+        
+        enter_to_continue()
 
     prompt(f'End of game. {GRAND_WINNER} wins')
 
@@ -180,10 +189,11 @@ while main_game_start:
 
     if answer[0] == 'n':
         main_game_start = False
+prompt('Terminating Program.')
+os.system('clear')
 
 # TODO:
 # display how player/computer won, i.e. lizard poisons spock, rock crushes
 # lizard etc
 # add time delays to make the game more interesting
-# clear console at strategic points to keep it clean
 # Improve end of game display
