@@ -14,7 +14,7 @@ VALID_CHOICES = ", ".join(list(f'"{key}" for {value}'
 def prompt(message):
     print(f'==> {message}')
 
-def display_winner(player, computer):
+def get_winner(player, computer):
     if ((player == 'rock' and
          (computer == 'scissors' or computer == 'lizard')) or
         (player == 'paper' and
@@ -25,7 +25,7 @@ def display_winner(player, computer):
          (computer == 'spock' or computer == 'paper')) or
         (player == 'spock' and
          (computer == 'scissors' or computer == 'rock'))):
-        return 'You win!'
+        return 'player'
     
     elif ((player == 'scissors' and
            (computer == 'rock' or computer == 'spock')) or
@@ -37,10 +37,10 @@ def display_winner(player, computer):
           (computer == 'scissors' or computer == 'rock')) or
           (player == 'spock' and
            (computer == 'paper' or computer == 'lizard'))):
-        return 'Computer wins!'
+        return 'computer'
     
     else:
-        return "It's a tie!"
+        return None
     
 def get_player_choice():
     prompt('Choose one: '
@@ -65,25 +65,53 @@ def get_computer_choice():
                                      in VALID_CHOICES_DICT.values()])
     return choice
 
-keep_going = True
+def check_grand_winner(list):
+    for player in list:
+        if list.count(player) == 3:
+            return player
+    return False
 
-while keep_going:
+def display_winner(winner):
+    if winner == 'player':
+        prompt('You win!')
+    elif winner == 'computer':
+        prompt('Computer wins!')
+    else:
+        prompt("It's a tie!")
 
-    player_choice = get_player_choice()
+main_game_continue = True
 
-    while invalid_choice(player_choice):
-        prompt("Invalid choice, please try again\n"
-               f"Your choices are: {VALID_CHOICES}")
+while main_game_continue:
+    winner_list = []
+
+    while True:
+
+        player_choice = get_player_choice()
+
+        while invalid_choice(player_choice):
+            prompt("Invalid choice, please try again\n"
+                f"Your choices are: {VALID_CHOICES}")
+            
+            player_choice = input()
         
-        player_choice = input()
-    
-    player_choice = de_abbreviate_choice(player_choice)
-    
-    computer_choice = get_computer_choice()
+        player_choice = de_abbreviate_choice(player_choice)
+        
+        computer_choice = get_computer_choice()
 
-    prompt(f'You chose {player_choice}, computer chose {computer_choice}.')
+        prompt(f'You chose {player_choice}, computer chose {computer_choice}.')
 
-    prompt(display_winner(player_choice, computer_choice))
+        winner = get_winner(player_choice, computer_choice)
+
+        display_winner(winner)
+
+        if winner:
+            winner_list.append(winner)
+
+        print(winner_list)
+        if check_grand_winner(winner_list):
+            break
+
+    prompt(f'End of game. {check_grand_winner(winner_list)} wins')
 
     prompt('Do you want to play again? (y/n)')
     answer = input().lower()
@@ -95,4 +123,4 @@ while keep_going:
         answer = input().lower()
 
     if answer[0] == 'n':
-        keep_going = False
+        main_game_continue = False
