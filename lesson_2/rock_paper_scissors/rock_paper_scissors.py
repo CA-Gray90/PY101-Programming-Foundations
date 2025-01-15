@@ -39,7 +39,7 @@ def get_winner(player, computer):
          computer in ('paper', 'lizard'))):
         return 'computer'
 
-    return None
+    return 'tie'
 
 def get_player_choice():
     prompt('Choose one: '
@@ -77,11 +77,7 @@ def display_winner(winner):
     else:
         prompt("It's a tie!")
 
-main_game_continue = True
-
-while main_game_continue:
-    winner_list = []
-
+def play_match():
     while True:
 
         player_choice = get_player_choice()
@@ -100,12 +96,22 @@ while main_game_continue:
 
         winner = get_winner(player_choice, computer_choice)
 
-        display_winner(winner)
+        return winner
 
-        if winner:
-            winner_list.append(winner)
+main_game_start = True
 
-        print(winner_list)  # Change to score that is updated and displayed
+while main_game_start:
+    winner_list = []
+
+    while True:
+        match_winner = play_match()
+
+        display_winner(match_winner)
+
+        if match_winner != 'tie':
+            winner_list.append(match_winner)
+
+        print(winner_list)  # Change to function that displays score that is updated each round
 
         GRAND_WINNER = get_grand_winner(winner_list)
         if GRAND_WINNER:
@@ -123,7 +129,7 @@ while main_game_continue:
         answer = input().lower()
 
     if answer[0] == 'n':
-        main_game_continue = False
+        main_game_start = False
 
 # TODO:
 # display score after each match
