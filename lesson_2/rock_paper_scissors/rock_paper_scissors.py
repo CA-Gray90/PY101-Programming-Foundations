@@ -1,6 +1,17 @@
 import random
 
-VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+# VALID_CHOICES = ['r', 'p', 'sc', 'l', 'sp']
+
+VALID_CHOICES_DICT = {
+    'r' : 'rock',
+    'p' : 'paper',
+    'sc': 'scissors',
+    'l' : 'lizard',
+    'sp': 'spock'
+}
+
+VALID_CHOICES = ", ".join(list(f'{key} = {value}' 
+                           for (key, value) in VALID_CHOICES_DICT.items()))
 
 def prompt(message):
     print(f'==> {message}')
@@ -36,15 +47,22 @@ def display_winner(player, computer):
 keep_going = True
 
 while keep_going:
-    prompt(f'Choose one: {", ".join(VALID_CHOICES)}')
+    prompt('Choose one: '
+           f'{VALID_CHOICES}')
+    
     choice = input().lower()
 
-    while choice not in VALID_CHOICES:
+    while choice not in VALID_CHOICES_DICT and\
+        choice not in VALID_CHOICES_DICT.values():
+
         prompt("Invalid choice, please try again\n"
                f"Your choices are: {VALID_CHOICES}")
         choice = input()
 
-    computer_choice = random.choice(VALID_CHOICES)
+    if len(choice) <= 2:
+        choice = VALID_CHOICES_DICT[choice]
+    
+    computer_choice = random.choice([value for value in VALID_CHOICES_DICT.values()])
 
     prompt(f'You chose {choice}, computer chose {computer_choice}.')
 
@@ -60,4 +78,4 @@ while keep_going:
         answer = input().lower()
 
     if answer[0] == 'n':
-        keep_going = False 
+        keep_going = False
