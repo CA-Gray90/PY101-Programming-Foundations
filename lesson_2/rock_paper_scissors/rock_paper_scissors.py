@@ -65,11 +65,11 @@ def get_computer_choice():
                                      in VALID_CHOICES_DICT.values()])
     return choice
 
-def check_grand_winner(list):
+def get_grand_winner(list):
     for player in list:
         if list.count(player) == 3:
             return player
-    return False
+    return None
 
 def display_winner(winner):
     if winner == 'player':
@@ -107,11 +107,13 @@ while main_game_continue:
         if winner:
             winner_list.append(winner)
 
-        print(winner_list)
-        if check_grand_winner(winner_list):
+        print(winner_list)  # Change to score that is updated and displayed
+
+        GRAND_WINNER = get_grand_winner(winner_list)
+        if GRAND_WINNER:
             break
 
-    prompt(f'End of game. {check_grand_winner(winner_list)} wins')
+    prompt(f'End of game. {GRAND_WINNER} wins')
 
     prompt('Do you want to play again? (y/n)')
     answer = input().lower()
@@ -124,3 +126,10 @@ while main_game_continue:
 
     if answer[0] == 'n':
         main_game_continue = False
+
+# TODO: 
+# display score after each match
+# display which match is about to commence
+# add time delays to make the game more interesting
+# clear console at strategic points to keep it clean
+# Improve end of game display
