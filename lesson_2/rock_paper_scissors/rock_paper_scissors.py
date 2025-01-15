@@ -34,7 +34,8 @@ def display_welcome():
             'Paper disproves Spock,\n'
             'Spock vaporizes Rock,\n'
             'Rock crushes Scissors\n')
-    prompt('All memorized? Very good! Hit Enter to begin...')
+    prompt('All memorized? Very good! Best out of 5 wins, good luck!')
+    prompt('Hit Enter to begin...')
 
 def hit_enter():
     input()
@@ -183,8 +184,6 @@ while main_game_start:
 # TODO:
 # display how player/computer won, i.e. lizard poisons spock, rock crushes
 # lizard etc
-# display which match is about to commence
 # add time delays to make the game more interesting
 # clear console at strategic points to keep it clean
 # Improve end of game display
-# Add a welcome and intro to game
