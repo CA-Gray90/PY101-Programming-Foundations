@@ -1,4 +1,4 @@
-Best of 5
+# Best of 5
 PSEUDOCODE:
 1. Create a list to count player wins.
 2. When a player or the computer wins add thier name to list
@@ -47,3 +47,10 @@ ELSE:
     GET winner 
         DISPLAY Winner
         break
+
+# Scoreboard:
+Start of main game:
+1. set player_score to 0
+2. set computer_score to 0
+3. after match is played, get the winner, add + 1 to winner score
+4. make sure scoreboard resets after grand winner announced
