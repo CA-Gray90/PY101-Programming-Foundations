@@ -1,0 +1,49 @@
+Best of 5
+PSEUDOCODE:
+1. Create a list to count player wins.
+2. When a player or the computer wins add thier name to list
+3. Check whether the list contains 3 of the same name
+4. If it does, then declare that player the winner
+5. If if doesn't, then continue onto the next match
+6. Continue until a players name appears 3 times in the list. Declare that player the winner. 
+7. Ask whether the player would like to play again
+
+FORMAL PSEUDOCODE:
+START
+SET list variable: winner_list = []
+
+WHILE True:
+SUBPROCESS: Display score
+    GET list of winners
+        DISPLAY number of times players name appears in list
+        DISPLAY number of times computers name appears in list
+
+SUBPROCESS: Display Match number
+        DISPLAY matches (total number of names in list + 1)
+
+SUBPROCESS: Match
+
+SUBPROCESS: add player to list
+    GET player winner from match
+    ADD that player to the list of winners
+
+SUBPROCESS: check for winner
+    GET list of winners
+    IF player name appears 3 times in this list
+        SUBPROCESS:
+            count amount of times players name appears
+            IF == 3:
+                RETURN player name
+            count amount of times computers name appears in list
+            IF == 3:
+                RETURN computer name
+    ELSE:
+        RETURN FALSE
+
+IF check for winner == False:
+    continue
+ELSE:
+    SUBPROCESS: Display winning message
+    GET winner 
+        DISPLAY Winner
+        break

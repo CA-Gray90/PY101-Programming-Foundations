@@ -1,7 +1,5 @@
 import random
 
-# VALID_CHOICES = ['r', 'p', 'sc', 'l', 'sp']
-
 VALID_CHOICES_DICT = {
     'r' : 'rock',
     'p' : 'paper',
@@ -10,7 +8,7 @@ VALID_CHOICES_DICT = {
     'sp': 'spock'
 }
 
-VALID_CHOICES = ", ".join(list(f'{key} = {value}' 
+VALID_CHOICES = ", ".join(list(f'"{key}" for {value}' 
                            for (key, value) in VALID_CHOICES_DICT.items()))
 
 def prompt(message):
@@ -43,30 +41,49 @@ def display_winner(player, computer):
     
     else:
         return "It's a tie!"
-
-keep_going = True
-
-while keep_going:
+    
+def get_player_choice():
     prompt('Choose one: '
            f'{VALID_CHOICES}')
     
     choice = input().lower()
+    return choice
 
-    while choice not in VALID_CHOICES_DICT and\
+def invalid_choice(choice):
+    if choice not in VALID_CHOICES_DICT and\
         choice not in VALID_CHOICES_DICT.values():
+        return True
+    return False
 
+def de_abbreviate_choice(choice):
+    if len(choice) <= 2:
+        return VALID_CHOICES_DICT[choice]
+    return choice
+
+def get_computer_choice():
+    choice = random.choice([value for value\
+                                     in VALID_CHOICES_DICT.values()])
+    return choice
+
+keep_going = True
+
+while keep_going:
+
+    player_choice = get_player_choice()
+
+    while invalid_choice(player_choice):
         prompt("Invalid choice, please try again\n"
                f"Your choices are: {VALID_CHOICES}")
-        choice = input()
-
-    if len(choice) <= 2:
-        choice = VALID_CHOICES_DICT[choice]
+        
+        player_choice = input()
     
-    computer_choice = random.choice([value for value in VALID_CHOICES_DICT.values()])
+    player_choice = de_abbreviate_choice(player_choice)
+    
+    computer_choice = get_computer_choice()
 
-    prompt(f'You chose {choice}, computer chose {computer_choice}.')
+    prompt(f'You chose {player_choice}, computer chose {computer_choice}.')
 
-    prompt(display_winner(choice, computer_choice))
+    prompt(display_winner(player_choice, computer_choice))
 
     prompt('Do you want to play again? (y/n)')
     answer = input().lower()
