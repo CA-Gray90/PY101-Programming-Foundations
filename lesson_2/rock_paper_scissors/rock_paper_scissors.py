@@ -28,7 +28,7 @@ def main_game_title():
 def display_welcome():
     prompt(MESSAGES["welcome_title"])
     prompt(MESSAGES["welcome_phrase"])
-    
+
 def explain_rules():
     prompt(MESSAGES["rules_title"])
     print()
@@ -54,8 +54,7 @@ def get_winner(player, computer):
         return 'tie'
     if player in WINNING_COMBOS and computer in WINNING_COMBOS[player]:
         return 'player'
-    else:
-        return 'computer'
+    return 'computer'
 
 def display_winning_method(player_move, computer_move, winner):
     if winner == 'player':
@@ -66,7 +65,7 @@ def display_winning_method(player_move, computer_move, winner):
         prompt(f'{computer_move.capitalize()} '
                f'{WINNING_METHOD[computer_move][player_move]} '
                f'{player_move.capitalize()}!')
-        
+
 def get_player_choice():
     prompt(f'{MESSAGES["choose_weapon"]}'
            f'{VALID_CHOICES}')
@@ -98,19 +97,19 @@ def display_winner(winner):
         prompt(MESSAGES["its_tie"])
 
 def display_scoreboard(player_score, computer_score):
-    TITLE = 'SCOREBOARD'
-    OUTER_BORDER = '*' * (len(TITLE) + 8)
-    INNER_WIDTH = len(TITLE) + 6
-    PADDING = ' ' * 2
+    title = 'SCOREBOARD'
+    outer_border = '*' * (len(title) + 8)
+    inner_width = len(title) + 6
+    padding = ' ' * 2
 
-    print(OUTER_BORDER)
-    print('*' + TITLE.center(INNER_WIDTH, ' ') + '*')
-    print('*' + ' '.center(INNER_WIDTH, ' ') + '*')
+    print(outer_border)
+    print('*' + title.center(inner_width, ' ') + '*')
+    print('*' + ' '.center(inner_width, ' ') + '*')
     print('*' + \
-          f'{PADDING}Player: {player_score}'.ljust(INNER_WIDTH, ' ') + '*')
+          f'{padding}Player: {player_score}'.ljust(inner_width, ' ') + '*')
     print('*' + \
-          f'{PADDING}Computer: {computer_score}'.ljust(INNER_WIDTH, ' ') + '*')
-    print(OUTER_BORDER)
+          f'{padding}Computer: {computer_score}'.ljust(inner_width, ' ') + '*')
+    print(outer_border)
 
 def play_match():
     while True:
@@ -160,7 +159,7 @@ def play_main_game():
         game_winner = get_grand_winner(winner_list)
         if game_winner:
             return game_winner
-        
+
         enter_to_continue()
 
 def get_grand_winner(winner_list):
@@ -169,10 +168,10 @@ def get_grand_winner(winner_list):
             return player
     return None
 
-def display_end_game(GRAND_WINNER):
+def display_end_game(grand_winner):
     print()
     prompt(MESSAGES["game_over"])
-    if GRAND_WINNER == 'player':
+    if grand_winner == 'player':
         prompt(MESSAGES["grand_winner_player"])
         prompt(MESSAGES["ai_quip"])
         print()
@@ -194,14 +193,14 @@ def ask_play_again():
 def exit_game(answer):
     if answer[0] == 'n':
         return True
-    else:
-        prompt(MESSAGES["restarting"])
-        for number in '321':
-            print(number)
-            time.sleep(1)
 
-        os.system('clear')
-        return False
+    prompt(MESSAGES["restarting"])
+    for number in '321':
+        print(number)
+        time.sleep(1)
+
+    os.system('clear')
+    return False
 
 def main():
     os.system('clear')
@@ -216,9 +215,9 @@ def main():
     main_game_start = True
 
     while main_game_start:
-        GRAND_WINNER = play_main_game()
+        grand_winner = play_main_game()
 
-        display_end_game(GRAND_WINNER)
+        display_end_game(grand_winner)
 
         user_answer = ask_play_again()
 
@@ -228,5 +227,3 @@ def main():
     time.sleep(0.5)
 
 main()
-# TODO:
-# Pylint
