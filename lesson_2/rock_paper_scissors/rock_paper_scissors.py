@@ -3,35 +3,20 @@ import os
 import time
 import json
 
-VALID_CHOICES_DICT = {
-    'r' : 'rock',
-    'p' : 'paper',
-    'sc': 'scissors',
-    'l' : 'lizard',
-    'sp': 'spock'
-}
+with open('messages.json', 'r') as file:
+    MESSAGES = json.load(file)
+
+with open('game_dicts.json', 'r') as file:
+    GAME_DICTS = json.load(file)
+
+VALID_CHOICES_DICT = GAME_DICTS["valid_choices_dict"]
 
 VALID_CHOICES = ", ".join(list(f'"{key}" for {value}'
                            for (key, value) in VALID_CHOICES_DICT.items()))
 
-WINNING_COMBOS = {
-    'rock'    : ['scissors', 'lizard'],
-    'scissors': ['paper', 'lizard'],
-    'paper'   : ['rock', 'spock'],
-    'lizard'  : ['spock', 'paper'],
-    'spock'   : ['rock', 'scissors']
-}
+WINNING_COMBOS = GAME_DICTS["winning_combos"]
 
-WINNING_METHOD = {
-    'rock' : {'scissors' : 'crushes', 'lizard' : 'crushes'},
-    'scissors' : {'paper' : 'cuts', 'lizard' : 'decaptiates'},
-    'paper' : {'rock' : 'covers', 'spock' : 'disproves'},
-    'lizard' : {'spock': 'poisons', 'paper': 'eats'},
-    'spock' : {'rock' : 'vapourizes', 'scissors' : 'smashes'}
-}
-
-with open('messages.json', 'r') as file:
-    MESSAGES = json.load(file)
+WINNING_METHOD = GAME_DICTS["winning_method"]
 
 def prompt(message):
     print(f'==> {message}')
