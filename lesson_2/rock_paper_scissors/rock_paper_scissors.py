@@ -214,11 +214,8 @@ while main_game_start:
 
     if answer[0] == 'n':
         main_game_start = False
-prompt('Terminating Program in 2 seconds...')
-time.sleep(2)
-os.system('clear')
+prompt('Program Terminated.')
+time.sleep(0.5)
 
 # TODO:
-# display how player/computer won, i.e. lizard poisons spock, rock crushes
-# lizard etc
 # Improve end of game display
