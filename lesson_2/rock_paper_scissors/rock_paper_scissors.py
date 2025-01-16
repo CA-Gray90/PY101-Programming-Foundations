@@ -40,9 +40,11 @@ def explain_rules():
     prompt('All memorized? Very good! Best out of 5 wins, good luck!')
 
 def display_countdown():
-    for element in ['Scissors!', 'Paper!', 'Rock!']:
+    print()
+    for element in ['Here we go!!', 'Scissors!', 'Paper!', 'Rock!']:
         print(element)
-        time.sleep(1)
+        time.sleep(0.8)
+    print()
 
 def enter_to_continue():
     print()
@@ -138,8 +140,10 @@ def display_scoreboard(player_score, computer_score):
     print(OUTER_BORDER)
     print('*' + TITLE.center(INNER_WIDTH, ' ') + '*')
     print('*' + ' '.center(INNER_WIDTH, ' ') + '*')
-    print('*' + f'{PADDING}Player: {player_score}'.ljust(INNER_WIDTH, ' ') + '*')
-    print('*' + f'{PADDING}Computer: {computer_score}'.ljust(INNER_WIDTH, ' ') + '*')
+    print('*' + \
+          f'{PADDING}Player: {player_score}'.ljust(INNER_WIDTH, ' ') + '*')
+    print('*' + \
+          f'{PADDING}Computer: {computer_score}'.ljust(INNER_WIDTH, ' ') + '*')
     print(OUTER_BORDER)
 
 def get_grand_winner(winner_list):
@@ -205,7 +209,8 @@ while main_game_start:
 
     if answer[0] == 'n':
         main_game_start = False
-prompt('Terminating Program.')
+prompt('Terminating Program in 2 seconds...')
+time.sleep(2)
 os.system('clear')
 
 # TODO:
