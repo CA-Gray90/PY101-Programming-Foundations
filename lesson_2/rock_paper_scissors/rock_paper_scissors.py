@@ -76,6 +76,16 @@ def get_winner(player, computer):
     else:
         return 'computer'
 
+def display_winning_method(player_move, computer_move, winner):
+    if winner == 'player':
+        prompt(f'{player_move.capitalize()} '
+               f'{WINNING_METHOD[player_move][computer_move]} '
+               f'{computer_move.capitalize()}!')
+    elif winner == 'computer':
+        prompt(f'{computer_move.capitalize()} '
+               f'{WINNING_METHOD[computer_move][player_move]} '
+               f'{player_move.capitalize()}!')
+        
 def get_player_choice():
     prompt('Choose your weapon: '
            f'{VALID_CHOICES}')
@@ -114,9 +124,12 @@ def play_match():
 
         display_countdown()
 
-        prompt(f'You chose {player_choice}, computer chose {computer_choice}.')
+        prompt(f'You chose {player_choice.capitalize()}, '
+               f'computer chose {computer_choice.capitalize()}.')
 
         winner = get_winner(player_choice, computer_choice)
+
+        display_winning_method(player_choice, computer_choice, winner)
 
         return winner
 
@@ -161,15 +174,10 @@ while main_game_start:
     }
 
     main_game_title()
-
     display_welcome()
-
     enter_to_continue()
-
     main_game_title()
-
     explain_rules()
-
     enter_to_continue()
 
     while True:
