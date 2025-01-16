@@ -1,5 +1,6 @@
 import random
 import os
+import time
 
 VALID_CHOICES_DICT = {
     'r' : 'rock',
@@ -23,7 +24,8 @@ def display_welcome():
     prompt('Welcome to Rock, Paper, Scissors, Lizard, Spock!')
     prompt('In this exciting game, it will be your wits against the computers.'
            ' Can you beat it?')
-    print()
+    
+def explain_rules():
     prompt('Here are the rules:')
     print('\nScissors cuts Paper,\n'
             'Paper covers Rock,\n'
@@ -37,7 +39,13 @@ def display_welcome():
             'Rock crushes Scissors\n')
     prompt('All memorized? Very good! Best out of 5 wins, good luck!')
 
+def display_countdown():
+    for element in ['Scissors!', 'Paper!', 'Rock!']:
+        print(element)
+        time.sleep(1)
+
 def enter_to_continue():
+    print()
     prompt('Hit Enter to continue...')
     input()
     os.system('clear')
@@ -70,7 +78,7 @@ def get_winner(player, computer):
     return 'tie'
 
 def get_player_choice():
-    prompt('Choose one: '
+    prompt('Choose your weapon: '
            f'{VALID_CHOICES}')
 
     choice = input().lower()
@@ -104,6 +112,8 @@ def play_match():
         player_choice = de_abbreviate_choice(player_choice)
 
         computer_choice = get_computer_choice()
+
+        display_countdown()
 
         prompt(f'You chose {player_choice}, computer chose {computer_choice}.')
 
@@ -155,6 +165,12 @@ while main_game_start:
 
     enter_to_continue()
 
+    main_game_title()
+
+    explain_rules()
+
+    enter_to_continue()
+
     while True:
         main_game_title()
 
@@ -168,7 +184,7 @@ while main_game_start:
             winner_list.append(match_winner)
             scores[match_winner] += 1
         else:
-            prompt('Redoing match...')
+            prompt('Redo the match.')
 
         GRAND_WINNER = get_grand_winner(winner_list)
         if GRAND_WINNER:
