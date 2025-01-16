@@ -13,6 +13,22 @@ VALID_CHOICES_DICT = {
 VALID_CHOICES = ", ".join(list(f'"{key}" for {value}'
                            for (key, value) in VALID_CHOICES_DICT.items()))
 
+WINNING_COMBOS = {
+    'rock'    : ['scissors', 'lizard'],
+    'scissors': ['paper', 'lizard'],
+    'paper'   : ['rock', 'spock'],
+    'lizard'  : ['spock', 'paper'],
+    'spock'   : ['rock', 'scissors']
+}
+
+WINNING_METHOD = {
+    'rock' : {'scissors' : 'crushes', 'lizard' : 'crushes'},
+    'scissors' : {'paper' : 'cuts', 'lizard' : 'decaptiates'},
+    'paper' : {'rock' : 'covers', 'spock' : 'disproves'},
+    'lizard' : {'spock': 'poisons', 'paper': 'eats'},
+    'spock' : {'rock' : 'vapourizes', 'scissors' : 'smashes'}
+}
+
 def prompt(message):
     print(f'==> {message}')
 
@@ -53,31 +69,12 @@ def enter_to_continue():
     os.system('clear')
 
 def get_winner(player, computer):
-    if ((player == 'rock' and
-         computer in ('scissors', 'lizard')) or
-        (player == 'paper' and
-         computer in ('rock', 'spock')) or
-        (player == 'scissors' and
-         computer in ('paper', 'lizard')) or
-        (player == 'lizard' and
-         computer in ('spock', 'paper')) or
-        (player == 'spock' and
-         computer in ('scissors', 'rock'))):
+    if player == computer:
+        return 'tie'
+    if player in WINNING_COMBOS and computer in WINNING_COMBOS[player]:
         return 'player'
-
-    if ((player == 'scissors' and
-           computer in ('rock', 'spock')) or
-        (player == 'rock' and
-         computer in ('paper', 'spock')) or
-        (player == 'paper' and
-         computer in ('scissors', 'lizard')) or
-        (player == 'lizard' and
-         computer in ('scissors', 'rock')) or
-        (player == 'spock' and
-         computer in ('paper', 'lizard'))):
+    else:
         return 'computer'
-
-    return 'tie'
 
 def get_player_choice():
     prompt('Choose your weapon: '
@@ -216,5 +213,4 @@ os.system('clear')
 # TODO:
 # display how player/computer won, i.e. lizard poisons spock, rock crushes
 # lizard etc
-# add time delays to make the game more interesting
 # Improve end of game display
