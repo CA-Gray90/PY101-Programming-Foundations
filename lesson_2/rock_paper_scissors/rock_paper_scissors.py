@@ -89,30 +89,6 @@ def get_computer_choice():
     computer_choice = random.choice(list(VALID_CHOICES_DICT.values()))
     return  computer_choice
 
-def play_match():
-    while True:
-        player_choice = get_player_choice()
-
-        while invalid_choice(player_choice):
-            prompt(f'{MESSAGES["invalid_choice"]} {VALID_CHOICES}')
-
-            player_choice = input()
-
-        player_choice = de_abbreviate_choice(player_choice)
-
-        computer_choice = get_computer_choice()
-
-        display_countdown()
-
-        prompt(f'{MESSAGES["you_chose"]} {player_choice.capitalize()}, '
-               f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
-
-        winner = get_winner(player_choice, computer_choice)
-
-        display_winning_method(player_choice, computer_choice, winner)
-
-        return winner
-
 def display_winner(winner):
     if winner == 'player':
         prompt(MESSAGES["you_win"])
@@ -136,6 +112,28 @@ def display_scoreboard(player_score, computer_score):
           f'{PADDING}Computer: {computer_score}'.ljust(INNER_WIDTH, ' ') + '*')
     print(OUTER_BORDER)
 
+def play_match():
+    while True:
+        player_choice = get_player_choice()
+
+        while invalid_choice(player_choice):
+            prompt(f'{MESSAGES["invalid_choice"]} {VALID_CHOICES}')
+
+            player_choice = input()
+
+        player_choice = de_abbreviate_choice(player_choice)
+        computer_choice = get_computer_choice()
+
+        display_countdown()
+
+        prompt(f'{MESSAGES["you_chose"]} {player_choice.capitalize()}, '
+               f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
+
+        winner = get_winner(player_choice, computer_choice)
+
+        display_winning_method(player_choice, computer_choice, winner)
+        return winner
+
 def play_main_game():
     winner_list = []
     scores = {
@@ -148,6 +146,7 @@ def play_main_game():
 
         display_scoreboard(scores['player'], scores['computer'])
         print()
+
         match_winner = play_match()
 
         display_winner(match_winner)
@@ -192,9 +191,19 @@ def ask_play_again():
         prompt(MESSAGES["invalid_yes_no"])
         answer = input().lower()
 
-def main():
-    main_game_start = True
+def exit_game(answer):
+    if answer[0] == 'n':
+        return True
+    else:
+        prompt(MESSAGES["restarting"])
+        for number in '321':
+            print(number)
+            time.sleep(1)
 
+        os.system('clear')
+        return False
+
+def main():
     os.system('clear')
 
     main_game_title()
@@ -204,6 +213,8 @@ def main():
     explain_rules()
     enter_to_continue()
 
+    main_game_start = True
+
     while main_game_start:
         GRAND_WINNER = play_main_game()
 
@@ -211,15 +222,7 @@ def main():
 
         user_answer = ask_play_again()
 
-        if user_answer[0] == 'n':
-            main_game_start = False
-        else:
-            prompt(MESSAGES["restarting"])
-            for number in '321':
-                print(number)
-                time.sleep(1)
-
-            os.system('clear')
+        main_game_start = not exit_game(user_answer)
 
     prompt(MESSAGES["program_end"])
     time.sleep(0.5)
@@ -227,5 +230,3 @@ def main():
 main()
 # TODO:
 # Pylint
-# Clean up
-# exporting messages, various things to json files
