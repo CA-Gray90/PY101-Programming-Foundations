@@ -156,29 +156,12 @@ def display_scoreboard(player_score, computer_score):
           f'{PADDING}Computer: {computer_score}'.ljust(INNER_WIDTH, ' ') + '*')
     print(OUTER_BORDER)
 
-def get_grand_winner(winner_list):
-    for player in winner_list:
-        if winner_list.count(player) == 3:
-            return player
-    return None
-
-main_game_start = True
-
-while main_game_start:
-    os.system('clear')
-
+def play_main_game():
     winner_list = []
     scores = {
         'player' : 0,
         'computer' : 0
     }
-
-    main_game_title()
-    display_welcome()
-    enter_to_continue()
-    main_game_title()
-    explain_rules()
-    enter_to_continue()
 
     while True:
         main_game_title()
@@ -195,27 +178,73 @@ while main_game_start:
         else:
             prompt('Redo the match.')
 
-        GRAND_WINNER = get_grand_winner(winner_list)
-        if GRAND_WINNER:
-            break
+        game_winner = get_grand_winner(winner_list)
+        if game_winner:
+            return game_winner
         
         enter_to_continue()
 
-    prompt(f'End of game. {GRAND_WINNER} wins')
+def get_grand_winner(winner_list):
+    for player in winner_list:
+        if winner_list.count(player) == 3:
+            return player
+    return None
 
+def display_end_game(GRAND_WINNER):
+    print()
+    prompt('Game Over!')
+    if GRAND_WINNER == 'player':
+        prompt('You won 3 matches and beat the computer. You are the '
+               'Grand Winner!')
+        prompt("AI won't take over the world yet.")
+        print()
+    else:
+        prompt('The Computer won 3 matches. They are the Grand Winner!')
+        prompt('It will be coming for your job next!')
+        print()
+
+def ask_play_again():
     prompt('Do you want to play again? (y/n)')
     answer = input().lower()
     while True:
         if answer.startswith('n') or answer.startswith('y'):
-            break
+            return answer
 
         prompt('Invalid input, please try again (y/n)')
         answer = input().lower()
 
-    if answer[0] == 'n':
-        main_game_start = False
-prompt('Program Terminated.')
-time.sleep(0.5)
+def main():
+    main_game_start = True
 
+    os.system('clear')
+
+    main_game_title()
+    display_welcome()
+    enter_to_continue()
+    main_game_title()
+    explain_rules()
+    enter_to_continue()
+
+    while main_game_start:
+        GRAND_WINNER = play_main_game()
+
+        display_end_game(GRAND_WINNER)
+
+        user_answer = ask_play_again()
+
+        if user_answer[0] == 'n':
+            main_game_start = False
+
+        prompt('Restarting in...')
+        for number in '321':
+            print(number)
+            time.sleep(1)
+
+        os.system('clear')
+
+    prompt('Program Terminated.')
+    time.sleep(0.5)
+
+main()
 # TODO:
 # Improve end of game display
