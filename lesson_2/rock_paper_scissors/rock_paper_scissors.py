@@ -1,6 +1,7 @@
 import random
 import os
 import time
+import json
 
 VALID_CHOICES_DICT = {
     'r' : 'rock',
@@ -29,42 +30,37 @@ WINNING_METHOD = {
     'spock' : {'rock' : 'vapourizes', 'scissors' : 'smashes'}
 }
 
+with open('messages.json', 'r') as file:
+    MESSAGES = json.load(file)
+
 def prompt(message):
     print(f'==> {message}')
 
 def main_game_title():
-    print('  Rock, Paper, Scissors, Lizard, Spock!  '.center(79, '*'))
+    print(MESSAGES["main_game_title"].center(79, '*'))
     print()
 
 def display_welcome():
-    prompt('Welcome to Rock, Paper, Scissors, Lizard, Spock!')
-    prompt('In this exciting game, it will be your wits against the computers.'
-           ' Can you beat it?')
+    prompt(MESSAGES["welcome_title"])
+    prompt(MESSAGES["welcome_phrase"])
     
 def explain_rules():
-    prompt('Here are the rules:')
-    print('\nScissors cuts Paper,\n'
-            'Paper covers Rock,\n'
-            'Rock crushes Lizard,\n'
-            'Lizard poisons Spock,\n'
-            'Spock smashes Scissors,\n'
-            'Scissors decapitates Lizard,\n'
-            'Lizard eats Paper,\n'
-            'Paper disproves Spock,\n'
-            'Spock vaporizes Rock,\n'
-            'Rock crushes Scissors\n')
-    prompt('All memorized? Very good! Best out of 5 wins, good luck!')
+    prompt(MESSAGES["rules_title"])
+    print()
+    print(MESSAGES["rules"])
+    print()
+    prompt(MESSAGES["rules_goodluck"])
 
 def display_countdown():
     print()
-    for element in ['Here we go!!', 'Scissors!', 'Paper!', 'Rock!']:
-        print(element)
-        time.sleep(0.8)
+    for phrase in MESSAGES["countdown_phrases"]:
+        print(phrase)
+        time.sleep(0.6)
     print()
 
 def enter_to_continue():
     print()
-    prompt('Hit Enter to continue...')
+    prompt(MESSAGES["hit_enter_message"])
     input()
     os.system('clear')
 
@@ -87,7 +83,7 @@ def display_winning_method(player_move, computer_move, winner):
                f'{player_move.capitalize()}!')
         
 def get_player_choice():
-    prompt('Choose your weapon: '
+    prompt(f'{MESSAGES["choose_weapon"]}'
            f'{VALID_CHOICES}')
 
     choice = input().lower()
@@ -113,8 +109,7 @@ def play_match():
         player_choice = get_player_choice()
 
         while invalid_choice(player_choice):
-            prompt("Invalid choice, please try again\n"
-                f"Your choices are: {VALID_CHOICES}")
+            prompt(f'{MESSAGES["invalid_choice"]} {VALID_CHOICES}')
 
             player_choice = input()
 
@@ -124,8 +119,8 @@ def play_match():
 
         display_countdown()
 
-        prompt(f'You chose {player_choice.capitalize()}, '
-               f'computer chose {computer_choice.capitalize()}.')
+        prompt(f'{MESSAGES["you_chose"]} {player_choice.capitalize()}, '
+               f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
 
         winner = get_winner(player_choice, computer_choice)
 
@@ -135,11 +130,11 @@ def play_match():
 
 def display_winner(winner):
     if winner == 'player':
-        prompt('You win!')
+        prompt(MESSAGES["you_win"])
     elif winner == 'computer':
-        prompt('Computer wins!')
+        prompt(MESSAGES["computer_wins"])
     else:
-        prompt("It's a tie!")
+        prompt(MESSAGES["its_tie"])
 
 def display_scoreboard(player_score, computer_score):
     TITLE = 'SCOREBOARD'
@@ -176,7 +171,7 @@ def play_main_game():
             winner_list.append(match_winner)
             scores[match_winner] += 1
         else:
-            prompt('Redo the match.')
+            prompt(MESSAGES["redo_match"])
 
         game_winner = get_grand_winner(winner_list)
         if game_winner:
@@ -192,25 +187,24 @@ def get_grand_winner(winner_list):
 
 def display_end_game(GRAND_WINNER):
     print()
-    prompt('Game Over!')
+    prompt(MESSAGES["game_over"])
     if GRAND_WINNER == 'player':
-        prompt('You won 3 matches and beat the computer. You are the '
-               'Grand Winner!')
-        prompt("AI won't take over the world yet.")
+        prompt(MESSAGES["grand_winner_player"])
+        prompt(MESSAGES["ai_quip"])
         print()
     else:
-        prompt('The Computer won 3 matches. They are the Grand Winner!')
-        prompt('It will be coming for your job next!')
+        prompt(MESSAGES["grand_winner_computer"])
+        prompt(MESSAGES["job_quip"])
         print()
 
 def ask_play_again():
-    prompt('Do you want to play again? (y/n)')
+    prompt(MESSAGES["play_again"])
     answer = input().lower()
     while True:
         if answer.startswith('n') or answer.startswith('y'):
             return answer
 
-        prompt('Invalid input, please try again (y/n)')
+        prompt(MESSAGES["invalid_yes_no"])
         answer = input().lower()
 
 def main():
@@ -234,15 +228,15 @@ def main():
 
         if user_answer[0] == 'n':
             main_game_start = False
+        else:
+            prompt(MESSAGES["restarting"])
+            for number in '321':
+                print(number)
+                time.sleep(1)
 
-        prompt('Restarting in...')
-        for number in '321':
-            print(number)
-            time.sleep(1)
+            os.system('clear')
 
-        os.system('clear')
-
-    prompt('Program Terminated.')
+    prompt(MESSAGES["program_end"])
     time.sleep(0.5)
 
 main()
