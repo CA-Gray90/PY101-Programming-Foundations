@@ -54,3 +54,40 @@ Start of main game:
 2. set computer_score to 0
 3. after match is played, get the winner, add + 1 to winner score
 4. make sure scoreboard resets after grand winner announced
+
+Winning Method:
+1. Determine how player won or lost
+2. display the appropriate method of winning
+
+set dictionary of winning combos, including method of winning e.g. 'crushes'.
+if player in winning combos, player wins
+if computer in winning combos, computer wins
+display message using method of winning from dictionary.
+
+from REPL:
+winning_combos = {
+    'rock'    : ['scissors', 'lizard'],
+    'scissors': ['paper', 'lizard'],
+    'paper'   : ['rock', 'spock'],
+    'lizard'  : ['spock', 'paper'],
+    'spock'   : ['rock', 'scissors']
+}
+
+winning_method = {
+    'rock' : {'scissors' : 'crushes', 'lizard' : 'crushes'},
+    'scissors' : {'paper' : 'cuts', 'lizard' : 'decaptiates'},
+    'paper' : {'rock' : 'covers', 'spock' : 'disproves'},
+    'lizard' : {'spock': 'poisons', 'paper': 'eats'},
+    'spock' : {'rock' : 'vapourizes', 'scissors' : 'smashes'}
+}
+
+def display_winning_method(move_win, move_lose): 
+    print(f'{move_win} {winning_method[move_win][move_lose]} {move_lose}!')
+
+player = 'lizard'
+computer = 'scissors'
+
+if player in winning_combos and computer in winning_combos[player]:
+    display_winning_method(player, computer)
+else:
+    display_winning_method(computer, player)
