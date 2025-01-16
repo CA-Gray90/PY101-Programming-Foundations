@@ -247,4 +247,6 @@ def main():
 
 main()
 # TODO:
-# Improve end of game display
+# Pylint
+# Clean up
+# exporting messages, various things to json files
