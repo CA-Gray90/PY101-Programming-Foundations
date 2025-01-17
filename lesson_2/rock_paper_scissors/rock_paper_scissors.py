@@ -18,6 +18,8 @@ WINNING_COMBOS = GAME_DICTS["winning_combos"]
 
 WINNING_METHOD = GAME_DICTS["winning_method"]
 
+GRAND_WINNER_SCORE = 3
+
 def prompt(message):
     print(f'==> {message}')
 
@@ -163,7 +165,7 @@ def play_main_game():
 
 def get_grand_winner(winner_list):
     for player in winner_list:
-        if winner_list.count(player) == 3:
+        if winner_list.count(player) == GRAND_WINNER_SCORE:
             return player
     return None
 
