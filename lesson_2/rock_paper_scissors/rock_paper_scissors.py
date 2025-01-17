@@ -36,18 +36,40 @@ def explain_rules():
     print()
     prompt(MESSAGES["rules_goodluck"])
 
-def display_countdown():
-    print()
-    for phrase in MESSAGES["countdown_phrases"]:
-        print(phrase)
-        time.sleep(0.6)
-    print()
-
 def enter_to_continue():
     print()
     prompt(MESSAGES["hit_enter_message"])
     input()
     os.system('clear')
+
+def get_player_choice():
+    prompt(f'{MESSAGES["choose_weapon"]}'
+           f'{VALID_CHOICES}')
+
+    choice = input().casefold()
+    return choice
+
+def invalid_choice(choice):
+    if choice not in VALID_CHOICES_DICT and\
+        choice not in VALID_CHOICES_DICT.values():
+        return True
+    return False
+
+def de_abbreviate_choice(choice):
+    if len(choice) <= 2:
+        return VALID_CHOICES_DICT.get(choice)
+    return choice
+
+def get_computer_choice():
+    computer_choice = random.choice(list(VALID_CHOICES_DICT.values()))
+    return  computer_choice
+
+def display_ingame_countdown():
+    print()
+    for phrase in MESSAGES["countdown_phrases"]:
+        print(phrase)
+        time.sleep(0.6)
+    print()
 
 def get_winner(player, computer):
     if player == computer:
@@ -66,29 +88,7 @@ def display_winning_method(player_move, computer_move, winner):
                f'{WINNING_METHOD[computer_move][player_move]} '
                f'{player_move.capitalize()}!')
 
-def get_player_choice():
-    prompt(f'{MESSAGES["choose_weapon"]}'
-           f'{VALID_CHOICES}')
-
-    choice = input().lower()
-    return choice
-
-def invalid_choice(choice):
-    if choice not in VALID_CHOICES_DICT and\
-        choice not in VALID_CHOICES_DICT.values():
-        return True
-    return False
-
-def de_abbreviate_choice(choice):
-    if len(choice) <= 2:
-        return VALID_CHOICES_DICT.get(choice)
-    return choice
-
-def get_computer_choice():
-    computer_choice = random.choice(list(VALID_CHOICES_DICT.values()))
-    return  computer_choice
-
-def display_winner(winner):
+def display_win_message(winner):
     if winner == 'player':
         prompt(MESSAGES["you_win"])
     elif winner == 'computer':
@@ -117,13 +117,13 @@ def play_match():
 
         while invalid_choice(player_choice):
             prompt(f'{MESSAGES["invalid_choice"]} {VALID_CHOICES}')
-
-            player_choice = input()
+            player_choice = input().casefold()
 
         player_choice = de_abbreviate_choice(player_choice)
+
         computer_choice = get_computer_choice()
 
-        display_countdown()
+        display_ingame_countdown()
 
         prompt(f'{MESSAGES["you_chose"]} {player_choice.capitalize()}, '
                f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
@@ -148,7 +148,7 @@ def play_main_game():
 
         match_winner = play_match()
 
-        display_winner(match_winner)
+        display_win_message(match_winner)
 
         if match_winner != 'tie':
             winner_list.append(match_winner)
