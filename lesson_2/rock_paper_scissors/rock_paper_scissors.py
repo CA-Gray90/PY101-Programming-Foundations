@@ -112,26 +112,25 @@ def display_scoreboard(player_score, computer_score):
     print(outer_border)
 
 def play_match():
-    while True:
-        player_choice = get_player_choice()
+    player_choice = get_player_choice()
 
-        while invalid_choice(player_choice):
-            prompt(f'{MESSAGES["invalid_choice"]} {VALID_CHOICES}')
-            player_choice = input().casefold()
+    while invalid_choice(player_choice):
+        prompt(f'{MESSAGES["invalid_choice"]} {VALID_CHOICES}')
+        player_choice = input().casefold()
 
-        player_choice = de_abbreviate_choice(player_choice)
+    player_choice = de_abbreviate_choice(player_choice)
 
-        computer_choice = get_computer_choice()
+    computer_choice = get_computer_choice()
 
-        display_ingame_countdown()
+    display_ingame_countdown()
 
-        prompt(f'{MESSAGES["you_chose"]} {player_choice.capitalize()}, '
-               f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
+    prompt(f'{MESSAGES["you_chose"]} {player_choice.capitalize()}, '
+            f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
 
-        winner = get_winner(player_choice, computer_choice)
+    winner = get_winner(player_choice, computer_choice)
 
-        display_winning_method(player_choice, computer_choice, winner)
-        return winner
+    display_winning_method(player_choice, computer_choice, winner)
+    return winner
 
 def play_main_game():
     winner_list = []
