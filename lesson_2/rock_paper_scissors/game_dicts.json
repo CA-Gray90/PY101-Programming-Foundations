@@ -1,5 +1,38 @@
 {
-    "valid_choices_dict" : {"r" : "rock", "p" : "paper", "sc": "scissors", "l" : "lizard", "sp": "spock"},
-    "winning_combos" : {"rock": ["scissors", "lizard"], "scissors": ["paper", "lizard"], "paper": ["rock", "spock"], "lizard": ["spock", "paper"], "spock": ["rock", "scissors"]},
-    "winning_method" : {"rock": {"scissors": "crushes", "lizard": "crushes"}, "scissors": {"paper": "cuts", "lizard": "decaptiates"}, "paper": {"rock": "covers", "spock": "disproves"}, "lizard": {"spock": "poisons", "paper": "eats"}, "spock": {"rock": "vapourizes", "scissors": "smashes"}}
+    "valid_choices_dict" : {
+        "r" : "rock",
+        "p" : "paper",
+        "sc": "scissors",
+        "l" : "lizard",
+        "sp": "spock"
+    },
+    "winning_combos" :{
+        "rock": ["scissors", "lizard"],
+        "scissors": ["paper", "lizard"],
+        "paper": ["rock", "spock"],
+        "lizard": ["spock", "paper"],
+        "spock": ["rock", "scissors"]
+    },
+    "winning_method" : {
+        "rock": {
+            "scissors": "crushes",
+            "lizard": "crushes"
+            },
+        "scissors": {
+            "paper": "cuts",
+            "lizard": "decaptiates"
+            },
+        "paper": {
+            "rock": "covers",
+            "spock": "disproves"
+            },
+        "lizard": {
+            "spock": "poisons",
+            "paper": "eats"
+            },
+        "spock": {
+            "rock": "vapourizes",
+            "scissors": "smashes"
+            }
+    }
 }
