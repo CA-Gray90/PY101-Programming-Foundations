@@ -76,19 +76,14 @@ def display_ingame_countdown():
 def get_winner(player, computer):
     if player == computer:
         return 'tie'
-    if player in WINNING_COMBOS and computer in WINNING_COMBOS[player]:
+    if computer in WINNING_COMBOS[player]:
         return 'player'
     return 'computer'
 
-def display_winning_method(player_move, computer_move, winner):
-    if winner == 'player':
-        prompt(f'{player_move.capitalize()} '
-               f'{WINNING_METHOD[player_move][computer_move]} '
-               f'{computer_move.capitalize()}!')
-    elif winner == 'computer':
-        prompt(f'{computer_move.capitalize()} '
-               f'{WINNING_METHOD[computer_move][player_move]} '
-               f'{player_move.capitalize()}!')
+def display_winning_method(winning_choice, losing_choice):
+        prompt(f'{winning_choice.capitalize()} '
+               f'{WINNING_METHOD[winning_choice][losing_choice]} '
+               f'{losing_choice.capitalize()}!')
 
 def display_win_message(winner):
     if winner == 'player':
@@ -131,7 +126,11 @@ def play_match():
 
     winner = get_winner(player_choice, computer_choice)
 
-    display_winning_method(player_choice, computer_choice, winner)
+    if winner == 'player':
+        display_winning_method(player_choice, computer_choice)
+    else:
+        display_winning_method(computer_choice, player_choice)
+
     return winner
 
 def play_main_game():
