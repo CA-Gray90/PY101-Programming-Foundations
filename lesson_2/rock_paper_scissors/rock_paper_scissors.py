@@ -125,16 +125,22 @@ def play_match():
             f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
 
     winner = get_winner(player_choice, computer_choice)
-
-    if winner == 'player':
-        display_winning_method(player_choice, computer_choice)
-    else:
-        display_winning_method(computer_choice, player_choice)
+    
+    if winner != 'tie':
+        if winner == 'player':
+            display_winning_method(player_choice, computer_choice)
+        else:
+            display_winning_method(computer_choice, player_choice)
 
     return winner
 
+def get_grand_winner(scores_dict):
+    if GRAND_WINNER_SCORE in scores_dict.values():
+        return 'player' if scores_dict['player'] == GRAND_WINNER_SCORE\
+              else 'computer'
+    return None
+
 def play_main_game():
-    winner_list = []
     scores = {
         'player' : 0,
         'computer' : 0
@@ -151,22 +157,15 @@ def play_main_game():
         display_win_message(match_winner)
 
         if match_winner != 'tie':
-            winner_list.append(match_winner)
             scores[match_winner] += 1
         else:
             prompt(MESSAGES["redo_match"])
 
-        game_winner = get_grand_winner(winner_list)
+        game_winner = get_grand_winner(scores)
         if game_winner:
             return game_winner
 
         enter_to_continue()
-
-def get_grand_winner(winner_list):
-    for player in winner_list:
-        if winner_list.count(player) == GRAND_WINNER_SCORE:
-            return player
-    return None
 
 def display_end_game(grand_winner):
     print()
