@@ -81,9 +81,9 @@ def get_winner(player, computer):
     return 'computer'
 
 def display_winning_method(winning_choice, losing_choice):
-        prompt(f'{winning_choice.capitalize()} '
-               f'{WINNING_METHOD[winning_choice][losing_choice]} '
-               f'{losing_choice.capitalize()}!')
+    prompt(f'{winning_choice.capitalize()} '
+            f'{WINNING_METHOD[winning_choice][losing_choice]} '
+            f'{losing_choice.capitalize()}!')
 
 def display_win_message(winner):
     if winner == 'player':
@@ -125,7 +125,7 @@ def play_match():
             f'{MESSAGES["computer_chose"]} {computer_choice.capitalize()}.')
 
     winner = get_winner(player_choice, computer_choice)
-    
+
     if winner != 'tie':
         if winner == 'player':
             display_winning_method(player_choice, computer_choice)
