@@ -15,6 +15,8 @@ with open('viewed_list.json', 'r') as file:
 
 RATINGS_CHOICES = '1111111222334'
 
+CURRENT_MODULE = 'PY101'
+
 def get_number_of_topics(topic_dict):
     total = []
 
@@ -25,6 +27,11 @@ def get_number_of_topics(topic_dict):
 
 def prompt(text):
     print(f'--> {text}')
+
+def display_welcome():
+    os.system('clear')
+    prompt(f'** Welcome to the {CURRENT_MODULE} Revision topic Generator! **')
+    print()
 
 def get_random_topic():
     while True:
@@ -99,13 +106,15 @@ def save_to_json(topic, rating, topic_dict):
                 rated_list.remove(topic)
 
         topic_dict[rating].append(topic)
+        prompt('Saving...')
+        time.sleep(0.5)
 
         with open('topics_v2.json' , 'w') as file:
             json.dump(topics_dict, file)
 
 def add_to_viewed_list(topic):
     if topic not in viewed_list:
-        prompt('Adding topic to viewed list...')
+        prompt('Topic added to viewed list...')
         viewed_list.append(topic)
 
         with open('viewed_list.json', 'w') as file:
@@ -113,12 +122,37 @@ def add_to_viewed_list(topic):
 
         time.sleep(0.5)
 
-def display_viewed_list(viewed, num_of_topics):
+def get_topic_rating(topic, topics_dict):
+    for rating in topics_dict.keys():
+        if topic in topics_dict[rating]:
+            return rating
+    return None
+
+def get_topic_length(viewed_list):
+    if len(viewed_list) > 1:
+            max_topic_length = len(viewed_list[0])
+            for item in viewed_list[1:]:
+                if len(item) > max_topic_length:
+                    max_topic_length = len(item) + 3
+                    return max_topic_length
+    else:
+        return len(viewed_list[0]) + 3
+
+def display_viewed_list(viewed, num_of_topics, topic_dict):
     prompt('Do you wish to display the Viewed List of topics? y/n')
+    
     if yes_or_no():
+        max_topic_length = get_topic_length(viewed)
+
+        print(f'- TOPICS{' ' * (max_topic_length - 6)}RATING')
+
         for item in viewed:
-            print(f'- {item}')
+            item_rating = get_topic_rating(item, topic_dict)
+            print(f'- {item}{'.' * (max_topic_length - len(item))}'
+                          f'  {item_rating}')
+        
         print(f'[{len(viewed)} / {num_of_topics}]')
+
     print()
 
 def empty_view_list(viewed_list, num_of_topics):
@@ -130,10 +164,14 @@ def empty_view_list(viewed_list, num_of_topics):
                    ' Continue? y/n')
             if yes_or_no():
                 viewed_list.clear()
+                with open('viewed_list.json', 'w') as file:
+                    json.dump(viewed_list, file)
 
 def main():
     while True:
         number_of_topics = get_number_of_topics(topics_dict)
+        display_welcome()
+        empty_view_list(viewed_list, number_of_topics)
         while True:
             os.system('clear')
             chosen_topic = get_random_topic()
@@ -145,12 +183,8 @@ def main():
         user_rating = get_user_rating()
         save_to_json(chosen_topic, user_rating, topics_dict)
         add_to_viewed_list(chosen_topic)
-        display_viewed_list(viewed_list, number_of_topics)
-        empty_view_list(viewed_list, number_of_topics)
+        display_viewed_list(viewed_list, number_of_topics, topics_dict)
         if not try_again():
             break
 
 main()
-
-#TODO: Add rating detail to veiwed list. Perhaps ask if user wants to see
-# viewed list earlier.
